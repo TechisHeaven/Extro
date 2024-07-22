@@ -12,7 +12,7 @@ export default function MainCard({
   className,
 }: MainCardProps) {
   return (
-    <div className="p-4 border flex flex-col gap-2 justify-between shadow-md rounded-md h-full max-h-56">
+    <div className="p-4 border flex flex-col gap-2 justify-between shadow-md rounded-sm h-full max-h-56">
       <h1 className="text-xl font-semibold">{title}</h1>
       <div className={cn(className, "h-full")}>{children}</div>
     </div>

@@ -4,6 +4,7 @@ import { ArrowUp, Plus, Wallet } from "lucide-react";
 import ExpenseCard from "./ExpenseCard";
 import AreaChartLinear from "@/components/ui/Charts/AreaChartLinear";
 import MainCard from "./MainCard";
+import MainTable from "@/components/ui/Table/MainTable";
 
 export default function Home() {
   return (
@@ -53,6 +54,7 @@ export default function Home() {
           </Button>
         </MainCard>
       </div>
+      <MainTable />
     </main>
   );
 }
