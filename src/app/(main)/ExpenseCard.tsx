@@ -3,11 +3,9 @@ import React from "react";
 
 const ExpenseCard = () => {
   return (
-    <div className="border rounded-md p-4 flex flex-col gap-2 w-full">
-      <h6 className="text-base font-semibold">Total Expense</h6>
-
+    <div className="flex flex-col justify-end gap-4 h-full">
       <div className="inline-flex items-end justify-between">
-        <h5 className="text-2xl font-semibold">
+        <h5 className="text-4xl font-semibold">
           $12000.00 <span className="text-xs text-secondaryColor">/14k</span>
         </h5>
         <h6 className="text-xs text-secondaryColor">This Week</h6>
