@@ -5,10 +5,11 @@ import ExpenseCard from "./ExpenseCard";
 import AreaChartLinear from "@/components/ui/Charts/AreaChartLinear";
 import MainCard from "./MainCard";
 import MainTable from "@/components/ui/Table/MainTable";
+import React, { Suspense } from "react";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main className=" min-h-screen p-4 w-full max-w-[1400px] m-auto">
+    <main className=" p-4 w-full max-w-[1400px] m-auto">
       <div className="heading inline-flex items-center justify-between w-full">
         <div>
           <h3 className="text-2xl font-semibold">Welcome, Himanshu</h3>
@@ -54,7 +55,9 @@ export default function Home() {
           </Button>
         </MainCard>
       </div>
-      <MainTable />
+      <Suspense fallback={<div>Loading......</div>}>
+        <MainTable />
+      </Suspense>
     </main>
   );
 }

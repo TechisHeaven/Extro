@@ -6,7 +6,7 @@ interface LayoutProps {
 }
 export default function layout({ children }: LayoutProps) {
   return (
-    <div className="inline-flex w-full ">
+    <div className="inline-flex w-full relative">
       <Sidebar />
       <div className="w-full">
         <Header />

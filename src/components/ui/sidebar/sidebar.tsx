@@ -5,7 +5,7 @@ import CustomToolTip from "../CustomToolTip/CustomToolTip";
 
 export default function Sidebar() {
   return (
-    <div className="min-w-16 p-4 flex flex-col border-r-2 font-semibold">
+    <div className="min-w-16 h-dvh p-4 flex flex-col border-r-2 font-semibold sticky top-0">
       <h1 className="Logo text-2xl font-semibold">ET</h1>
       <div className="nav-items flex flex-col gap-2 my-16">
         {sidebarIconsData.map((item: SidebarNavItemProps, index) => {
