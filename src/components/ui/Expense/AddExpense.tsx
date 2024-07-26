@@ -32,7 +32,7 @@ export default function AddExpense() {
           <SheetHeader>
             <SheetTitle>Add Expense</SheetTitle>
             <SheetDescription>
-              Add New Daily Expense in your Profile. Click save when you're
+              Add New Daily Expense in your Profile. Click save when you&apos;re
               done.
             </SheetDescription>
           </SheetHeader>

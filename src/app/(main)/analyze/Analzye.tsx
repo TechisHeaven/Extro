@@ -20,10 +20,24 @@ export default function Analzye() {
             </span>
           </p>
         </div>
-        <SelectDropDown />
+        <SelectDropDown items={SelectItemsWeekdays} />
       </div>
       <BarChartComponent />
       <Filter />
     </div>
   );
 }
+const SelectItemsWeekdays = [
+  {
+    id: 1,
+    title: "Week",
+  },
+  {
+    id: 2,
+    title: "Month",
+  },
+  {
+    id: 3,
+    title: "Year",
+  },
+];
