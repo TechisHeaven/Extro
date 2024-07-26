@@ -5,6 +5,7 @@ import ExpenseCard from "./ExpenseCard";
 import AreaChartLinear from "@/components/ui/Charts/AreaChartLinear";
 import MainCard from "./MainCard";
 import React from "react";
+import AddExpense from "@/components/ui/Expense/AddExpense";
 
 export default async function Home() {
   return (
@@ -17,14 +18,8 @@ export default async function Home() {
           </h6>
         </div>
         <div className="buttons inline-flex items-center gap-4">
-          <SelectDropDown />
-          <Button
-            className="bg-mainColor text-sm inline-flex gap-2"
-            size={"sm"}
-          >
-            <Plus className="w-4" />
-            Add Expense
-          </Button>
+          <SelectDropDown items={SelectItemsWeekdays} />
+          <AddExpense />
         </div>
       </div>
       <div className="cards grid grid-cols-3 m-4 gap-4">
@@ -57,3 +52,18 @@ export default async function Home() {
     </main>
   );
 }
+
+const SelectItemsWeekdays = [
+  {
+    id: 1,
+    title: "Week",
+  },
+  {
+    id: 2,
+    title: "Month",
+  },
+  {
+    id: 3,
+    title: "Year",
+  },
+];
