@@ -7,14 +7,14 @@ import {
   TableHeader,
   TableRow,
 } from "../table";
-import { Payment } from "./MainTable";
+import { Transaction } from "./MainTable";
 import SpinnerLoader from "../loader";
 export type Renderable<TProps> = React.ReactNode | React.ComponentType<TProps>;
 
 interface TableComponentProps {
   table: any;
   isPending: boolean;
-  columns: ColumnDef<Payment>[];
+  columns: ColumnDef<Transaction>[];
 }
 type tableHeaderGroupType = {
   id: string;

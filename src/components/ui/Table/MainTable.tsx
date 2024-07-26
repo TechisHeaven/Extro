@@ -23,11 +23,10 @@ import SearchInput from "../Input/SearchInput";
 import TableComponent from "./CustomTableComponent";
 import { columns } from "./columns.data";
 import Debouncer from "@/helpers/debouncer";
-import { useFormState } from "react-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAll } from "../../../../services/expense/fetch";
+import { fetchAll } from "@/services/expense/fetch";
 
-export type Payment = {
+export type Transaction = {
   id: string;
   amount: number;
   status: "pending" | "processing" | "success" | "failed";
@@ -46,6 +45,7 @@ export default function MainTable() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});

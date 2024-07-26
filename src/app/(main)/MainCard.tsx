@@ -6,7 +6,8 @@ interface MainCardProps {
   className?: React.ComponentProps<"div">["className"];
   children: React.ReactNode;
 }
-export default function MainCard({
+
+export default async function MainCard({
   title,
   children,
   className,

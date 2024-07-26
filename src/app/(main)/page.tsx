@@ -4,8 +4,7 @@ import { ArrowUp, Plus, Wallet } from "lucide-react";
 import ExpenseCard from "./ExpenseCard";
 import AreaChartLinear from "@/components/ui/Charts/AreaChartLinear";
 import MainCard from "./MainCard";
-import MainTable from "@/components/ui/Table/MainTable";
-import React, { Suspense } from "react";
+import React from "react";
 
 export default async function Home() {
   return (
@@ -55,9 +54,6 @@ export default async function Home() {
           </Button>
         </MainCard>
       </div>
-      <Suspense fallback={<div>Loading......</div>}>
-        <MainTable />
-      </Suspense>
     </main>
   );
 }

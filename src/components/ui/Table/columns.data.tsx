@@ -10,10 +10,10 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "../dropdown-menu";
-import { Payment } from "./MainTable";
 import { formatTimeStamps } from "@/helpers/time";
+import { Transaction } from "./MainTable";
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     id: "select",
     header: ({ table }) => (

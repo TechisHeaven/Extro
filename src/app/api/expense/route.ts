@@ -1,4 +1,4 @@
-import { Payment } from "@/components/ui/Table/MainTable";
+import { Transaction } from "@/components/ui/Table/MainTable";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // defaults to auto
@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   await new Promise(function (resolve) {
     setTimeout(resolve, 1000);
   });
-  const data: Payment[] = [
+  const data: Transaction[] = [
     {
       id: "m5gr84i9",
       amount: 316,
@@ -44,7 +44,7 @@ export async function GET(request: Request) {
     },
   ];
 
-  return NextResponse.json(
+  return Response.json(
     {
       message: "Successfullly Fetched Expneses",
       success: true,
@@ -52,6 +52,9 @@ export async function GET(request: Request) {
     },
     {
       status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
   );
 }
