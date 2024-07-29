@@ -8,11 +8,22 @@ import { cn } from "@/lib/utils";
 export interface SidebarNavItemProps {
   title: string;
   icon: React.ReactNode;
-  url: string;
+  url?: string;
 }
 const SidebarNavItem = ({ title, icon, url }: SidebarNavItemProps) => {
   const pathname = usePathname();
-  return (
+  return !url ? (
+    <div
+      className={cn(
+        "p-1 text-secondaryColor overflow-hidden bg-white rounded-md inline-flex gap-4 hover:text-mainColor transition-colors",
+        pathname === url && "bg-mainColor hover:text-white"
+      )}
+    >
+      <CustomToolTip content={title} position="right">
+        {icon}
+      </CustomToolTip>
+    </div>
+  ) : (
     <Link
       href={url}
       className={cn(

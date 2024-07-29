@@ -25,6 +25,7 @@ import { columns } from "./columns.data";
 import Debouncer from "@/helpers/debouncer";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAll } from "@/services/expense/fetch";
+import Loading from "@/app/(main)/@table/loading";
 
 export type Transaction = {
   id: string;
@@ -35,10 +36,30 @@ export type Transaction = {
 };
 
 export default function MainTable() {
-  const { isPending, error, data } = useQuery({
+  // const executeFetch = useAbortableFetch(fetchAll);
+  const { isPending, error, data } = useQuery<Transaction[], Error>({
     queryKey: ["fetchAll"],
     queryFn: fetchAll,
   });
+
+  // const [data, setData] = React.useState();
+  // const [isPending, setIsPending] = React.useState<boolean>(true);
+  // React.useEffect(() => {
+  //   async function fetch() {
+  //     try {
+  //       setIsPending(true);
+  //       const response = await fetchAll();
+
+  //       console.log(response);
+  //       setData(response.data);
+
+  //       setIsPending(false);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   fetch();
+  // }, []);
 
   // const [state, formAction, isPending] = useFormState(fetchAll, initialState);
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -76,42 +97,20 @@ export default function MainTable() {
   }
 
   React.useEffect(() => {
-    table.getColumn("name")?.setFilterValue(debouncedValue);
-  }, [debouncedValue, table]);
+    table.getColumn("name")?.setFilterValue(searchValue);
+  }, [searchValue]);
 
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <div className="inline-flex w-full justify-between items-center">
           <h1 className="text-xl font-semibold">Expenses</h1>
+
           <div className="filters inline-flex gap-2 items-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
-                  Filter <ChevronDown className="ml-2 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
-                    );
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
             <SearchInput
+              isDisabled={
+                data?.length === 0 || data?.length == undefined ? true : false
+              }
               placeholder="Search by Name, Catogery and etc."
               value={searchValue}
               onChange={HandleSearch}

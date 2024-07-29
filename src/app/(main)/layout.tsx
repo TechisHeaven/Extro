@@ -1,9 +1,10 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Header from "@/components/ui/Header/Header";
-import Sidebar from "@/components/ui/sidebar/sidebar";
+import Sidebar from "@/components/ui/Sidebar/sidebar";
 
 import React from "react";
+import Settings from "@/components/ui/Settings/Settings";
 interface LayoutProps {
   children: React.ReactNode;
   table: React.ReactNode;
@@ -11,6 +12,7 @@ interface LayoutProps {
 export default function Layout({ children, table }: LayoutProps) {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const isSettingsRoute = pathname.startsWith("/settings");
   return (
     <div className="inline-flex w-full relative ">
       <Sidebar />
@@ -18,7 +20,6 @@ export default function Layout({ children, table }: LayoutProps) {
         <Header />
         {children}
         {isHomePage && table}
-        {/* {table} */}
       </div>
     </div>
   );

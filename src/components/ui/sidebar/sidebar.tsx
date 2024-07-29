@@ -1,7 +1,15 @@
-import { HelpCircle, Inbox, LogOut, PieChart, Settings } from "lucide-react";
+import {
+  HelpCircle,
+  Inbox,
+  LogOut,
+  PieChart,
+  Settings as SettingsIcon,
+} from "lucide-react";
 import React from "react";
 import SidebarNavItem, { SidebarNavItemProps } from "./SidebarNavItem";
-import CustomToolTip from "../CustomToolTip/CustomToolTip";
+import CustomToolTip from "@/components/ui//CustomToolTip/CustomToolTip";
+import { CustomDialog } from "@/components/ui//Dialog/CustomDialog";
+import Settings from "@/components/ui/Settings/Settings";
 
 export default function Sidebar() {
   return (
@@ -44,7 +52,7 @@ const sidebarIconsData: SidebarNavItemProps[] = [
   },
   {
     title: "Settings",
-    url: "/settings",
-    icon: <Settings />,
+    icon: <SettingsIcon />,
+    url: "/settings/me",
   },
 ];

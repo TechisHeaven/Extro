@@ -1,4 +1,5 @@
-import { ColumnDef, flexRender, RowData } from "@tanstack/react-table";
+"use client";
+import { ColumnDef, flexRender } from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -9,6 +10,7 @@ import {
 } from "../table";
 import { Transaction } from "./MainTable";
 import SpinnerLoader from "../loader";
+
 export type Renderable<TProps> = React.ReactNode | React.ComponentType<TProps>;
 
 interface TableComponentProps {

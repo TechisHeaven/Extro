@@ -1,24 +1,37 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 interface SearchInputProps {
-  placeholder: string;
-  value: string;
-  onChange: (value: any) => void;
+  isDisabled?: boolean;
+  placeholder?: string;
+  value?: string;
+  icon?: React.ReactNode;
+  onChange?: (value: any) => void;
   className?: React.ComponentProps<"div">["className"];
 }
 const SearchInput = ({
+  isDisabled = false,
   placeholder,
   value,
   onChange,
   className,
+  icon,
 }: SearchInputProps) => {
   return (
-    <input
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className={cn("border rounded-md p-2 px-4", className)}
-    />
+    <div
+      className={cn(
+        "input inline-flex gap-2 items-center border rounded-md p-2 w-full",
+        className
+      )}
+    >
+      {icon}
+      <input
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        disabled={isDisabled}
+        className={"outline-none w-full"}
+      />
+    </div>
   );
 };
 
