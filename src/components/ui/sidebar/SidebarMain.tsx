@@ -9,7 +9,7 @@ import React from "react";
 import SidebarNavItem, { SidebarNavItemProps } from "./SidebarNavItem";
 import CustomToolTip from "@/components/ui//CustomToolTip/CustomToolTip";
 
-export default function Sidebar() {
+export default function SidebarMain() {
   return (
     <div className="min-w-16 h-dvh p-4 flex flex-col border-r-2 font-semibold sticky top-0">
       <h1 className="Logo text-2xl font-semibold">ET</h1>

@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import Header from "@/components/ui/Header/Header";
 import React from "react";
-import Sidebar from "@/components/ui/Sidebar/Sidebar";
+import SidebarMain from "@/components/ui/Sidebar/SidebarMain";
 interface LayoutProps {
   children: React.ReactNode;
   table: React.ReactNode;
@@ -13,7 +13,7 @@ export default function Layout({ children, table }: LayoutProps) {
   const isSettingsRoute = pathname.startsWith("/settings");
   return (
     <div className="inline-flex w-full relative ">
-      <Sidebar />
+      <SidebarMain />
       <div className="w-full">
         <Header />
         {children}
