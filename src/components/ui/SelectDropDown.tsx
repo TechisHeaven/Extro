@@ -27,7 +27,24 @@ const SelectDropDown = ({ items, className }: DropDownProps) => {
   return (
     <Select>
       <SelectTrigger className={cn("w-full", className)}>
-        <SelectValue className="font-semibold" placeholder={items[0]?.title} />
+        <SelectValue
+          className="font-semibold"
+          placeholder={
+            <h4 className="inline-flex items-center gap-2">
+              {items[0].icon && !items[0].image ? items[0].icon : null}
+              {items[0].image && !items[0].icon ? (
+                <Image
+                  loading="eager"
+                  alt="icon-image"
+                  src={items[0].image}
+                  width={20}
+                  height={20}
+                />
+              ) : null}
+              {items[0].title}
+            </h4>
+          }
+        />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup className="font-semibold">
