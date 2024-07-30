@@ -10,6 +10,7 @@ interface LayoutProps {
 export default function Layout({ children, table }: LayoutProps) {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  //change
   return (
     <div className="inline-flex w-full relative ">
       <SidebarMain />
