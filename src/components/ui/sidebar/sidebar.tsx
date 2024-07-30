@@ -8,8 +8,6 @@ import {
 import React from "react";
 import SidebarNavItem, { SidebarNavItemProps } from "./SidebarNavItem";
 import CustomToolTip from "@/components/ui//CustomToolTip/CustomToolTip";
-import { CustomDialog } from "@/components/ui//Dialog/CustomDialog";
-import Settings from "@/components/ui/Settings/Settings";
 
 export default function Sidebar() {
   return (

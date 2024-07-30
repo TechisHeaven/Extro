@@ -25,7 +25,7 @@ export function CustomDialog({
   return (
     <Dialog open={true} onOpenChange={handleClose}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className={cn("sm:max-w-[425px] p-0", className)}>
+      <DialogContent className={cn(" p-0", className)}>
         {children}
       </DialogContent>
     </Dialog>

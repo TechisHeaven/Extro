@@ -11,21 +11,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import SearchInput from "../Input/SearchInput";
 import TableComponent from "./CustomTableComponent";
 import { columns } from "./columns.data";
 import Debouncer from "@/helpers/debouncer";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAll } from "@/services/expense/fetch";
-import Loading from "@/app/(main)/@table/loading";
 
 export type Transaction = {
   id: string;
@@ -41,25 +34,6 @@ export default function MainTable() {
     queryKey: ["fetchAll"],
     queryFn: fetchAll,
   });
-
-  // const [data, setData] = React.useState();
-  // const [isPending, setIsPending] = React.useState<boolean>(true);
-  // React.useEffect(() => {
-  //   async function fetch() {
-  //     try {
-  //       setIsPending(true);
-  //       const response = await fetchAll();
-
-  //       console.log(response);
-  //       setData(response.data);
-
-  //       setIsPending(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetch();
-  // }, []);
 
   // const [state, formAction, isPending] = useFormState(fetchAll, initialState);
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -97,8 +71,8 @@ export default function MainTable() {
   }
 
   React.useEffect(() => {
-    table.getColumn("name")?.setFilterValue(searchValue);
-  }, [searchValue]);
+    table.getColumn("name")?.setFilterValue(debouncedValue);
+  }, [debouncedValue, table]);
 
   return (
     <div className="w-full">

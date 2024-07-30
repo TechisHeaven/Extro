@@ -4,7 +4,6 @@ import Header from "@/components/ui/Header/Header";
 import Sidebar from "@/components/ui/Sidebar/sidebar";
 
 import React from "react";
-import Settings from "@/components/ui/Settings/Settings";
 interface LayoutProps {
   children: React.ReactNode;
   table: React.ReactNode;

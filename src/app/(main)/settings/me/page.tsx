@@ -35,7 +35,8 @@ export default function page() {
       <div className="RemoveAccount w-full items-start">
         <Label>Remove Account</Label>
         <p className="text-xs text-secondaryColor">
-          You can do "Disable Account" to take a break from our platform.
+          You can do &ldquo;Disable Account&ldquo; to take a break from our
+          platform.
         </p>
       </div>
       <div className="inline-flex gap-2">
