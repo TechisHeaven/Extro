@@ -6,46 +6,46 @@ import SelectDropDown, {
   DropDownItemProps,
 } from "@/components/ui/SelectDropDown";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
 import React from "react";
 
 export default function page() {
+  const userName = "John Doe";
+  const aboutMe = "Discuss only about Coding, Gym, and Healthy Diet..✌";
   return (
     <div className="flex flex-col gap-8 p-4">
-      <div className="Email">
-        <Label>Email</Label>
-        <Input placeholder="John@doe.com" />
-      </div>
-      <div className="Password flex flex-col gap-1 items-start">
-        <Label>Password</Label>
-        <ChangePasswordDialog />
-      </div>
-      <div className="Language flex flex-col gap-1 items-start">
-        <Label>Language</Label>
-        <SelectDropDown items={languageDropDown} />
-      </div>
-      <div className="2FA inline-flex justify-between w-full items-start">
-        <div>
-          <Label>2 Factor Authentication</Label>
-          <p className="text-xs text-secondaryColor">
-            Once you login, we will send you a notification email.
-          </p>
-        </div>
-        <Switch className="data-[state=checked]:bg-mainColor " />
-      </div>
-      <div className="RemoveAccount w-full items-start">
-        <Label>Remove Account</Label>
-        <p className="text-xs text-secondaryColor">
-          You can do &ldquo;Disable Account&ldquo; to take a break from our
-          platform.
-        </p>
-      </div>
-      <div className="inline-flex gap-2">
-        <Button variant={"destructive"}>Disable account</Button>
+      <div className="Profile inline-flex items-end gap-4">
+        <Image
+          alt="profile-image"
+          src={"/profile-image.webp"}
+          width={100}
+          height={100}
+          className="rounded-full aspect-square object-cover"
+        />
+        <Button className="bg-mainColor">Change Picture</Button>
         <Button
           variant={"outline"}
-          className="bg-red-100 text-red-500 border-red-200"
+          className="bg-red-100 text-red-500 border-red-200 hover:text-red-500"
         >
-          Delete account
+          Remove Picture
+        </Button>
+      </div>
+      <div className="Name">
+        <Label>Profile Name</Label>
+        <Input placeholder="John Joe" value={userName} />
+      </div>
+      <div className="About flex flex-col gap-1 items-start">
+        <Label>About me</Label>
+        <Textarea
+          placeholder="Tell us a little bit about yourself"
+          className="resize-none h-48"
+          value={aboutMe}
+        />
+      </div>
+      <div className="Save w-full items-start">
+        <Button className="bg-mainColor" disabled>
+          Save
         </Button>
       </div>
     </div>

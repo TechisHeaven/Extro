@@ -2,7 +2,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/ui/Header/Header";
-import SidebarMain from "@/components/ui/sidebar/sidebarMain";
+import SidebarMain from "@/components/ui/Sidebar/SidebarMain";
 interface LayoutProps {
   children: React.ReactNode;
   table: React.ReactNode;

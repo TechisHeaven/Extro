@@ -1,14 +1,24 @@
 import { CustomDialog } from "@/components/ui/Dialog/CustomDialog";
 import React from "react";
-import { ChevronLeft, Laptop, Search, SettingsIcon, User } from "lucide-react";
+import {
+  Bell,
+  ChevronLeft,
+  Coins,
+  Laptop,
+  Search,
+  SettingsIcon,
+  User,
+} from "lucide-react";
 import SearchInput from "@/components/ui/Input/SearchInput";
 import SideBarItem from "@/components/ui/Settings/SideBarItem";
-import { SidebarNavItemProps } from "@/components/ui/Sidebar/SidebarNavItem";
 import BackButton from "@/components/ui/Buttons/BackButton";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
-    <CustomDialog className=" md:max-w-screen-md max-h-[100dvh] sm:max-h-[80dvh] md:max-h-[80dvh] h-full">
+    <CustomDialog
+      open={true}
+      className=" md:max-w-screen-md max-h-[100dvh] sm:max-h-[80dvh] md:max-h-[80dvh] h-full"
+    >
       <div className="inline-flex gap-0 sm:gap-0 md:gap-4 w-full">
         <div className="Sidebar w-fit sm:w-fit md:w-full max-w-48 p-2">
           <div className="inline-flex items-center">
@@ -18,18 +28,16 @@ export default function Template({ children }: { children: React.ReactNode }) {
             </h1>
           </div>
           <div className="sidebar-items py-4 flex flex-col gap-2 ">
-            {sidebarIconsData.map(
-              (item: SidebarNavItemProps, index: number) => {
-                return (
-                  <SideBarItem
-                    key={index}
-                    title={item.title}
-                    url={item.url}
-                    icon={item.icon}
-                  />
-                );
-              }
-            )}
+            {sidebarIconsData.map((item, index: number) => {
+              return (
+                <SideBarItem
+                  key={index}
+                  title={item.title}
+                  url={item.url}
+                  icon={item.icon}
+                />
+              );
+            })}
           </div>
         </div>
         <div className="w-full p-0 sm:p-0 md:p-4">
@@ -50,7 +58,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   );
 }
 
-const sidebarIconsData: SidebarNavItemProps[] = [
+const sidebarIconsData = [
   {
     title: "profile",
     url: "/settings/me",
@@ -65,5 +73,15 @@ const sidebarIconsData: SidebarNavItemProps[] = [
     title: "Appearance",
     url: "/settings/appearance",
     icon: <Laptop className="w-4" />,
+  },
+  {
+    title: "Pricing",
+    url: "/settings/pricing",
+    icon: <Coins className="w-4" />,
+  },
+  {
+    title: "Notification",
+    url: "/settings/notification",
+    icon: <Bell className="w-4" />,
   },
 ];
