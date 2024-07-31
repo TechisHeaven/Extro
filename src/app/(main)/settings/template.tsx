@@ -23,7 +23,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <div className="Sidebar w-fit sm:w-fit md:w-full max-w-48 p-2">
           <div className="inline-flex items-center">
             <BackButton />
-            <h1 className="font-semibold text-2xl p-4 hidden sm:block">
+            <h1 className="font-semibold text-2xl select-none p-4 hidden sm:block">
               Settings
             </h1>
           </div>

@@ -13,7 +13,11 @@ export default async function MainCard({
   className,
 }: MainCardProps) {
   return (
-    <div className="p-4 border flex flex-col gap-2 justify-between shadow-md rounded-sm h-full max-h-56">
+    <div
+      className={cn(
+        "p-4 border flex flex-col gap-2 justify-between shadow-md rounded-sm h-full max-h-56"
+      )}
+    >
       <h1 className="text-xl font-semibold">{title}</h1>
       <div className={cn(className, "h-full")}>{children}</div>
     </div>

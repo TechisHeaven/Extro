@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { SidebarNavItemProps } from "../Sidebar/SidebarNavItem";
+import { SidebarNavItemProps } from "../SidebarComponents/SidebarNavItem";
 import CustomToolTip from "../CustomToolTip/CustomToolTip";
 import { useWindowSize } from "@/hooks/windowSize";
 

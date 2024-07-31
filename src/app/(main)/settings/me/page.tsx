@@ -15,7 +15,7 @@ export default function page() {
   const aboutMe = "Discuss only about Coding, Gym, and Healthy Diet..✌";
   return (
     <div className="flex flex-col gap-8 p-4">
-      <div className="Profile inline-flex items-end gap-4">
+      <div className="Profile flex  gap-4 flex-col sm:flex-row items-center sm:items-end">
         <Image
           alt="profile-image"
           src={"/profile-image.webp"}

@@ -1,5 +1,8 @@
 //Timestamp to date Conversion Function
-export function formatTimeStamps(timestamp: number): string {
+export function formatTimeStamps(
+  timestamp: number,
+  complete?: boolean
+): string {
   const date = new Date(timestamp);
   const now = new Date();
 
@@ -29,6 +32,8 @@ export function formatTimeStamps(timestamp: number): string {
       day: "numeric",
     };
     const formattedDate = date.toLocaleDateString("en-US", dateOptions);
-    return `${formattedDate}, ${date.toLocaleTimeString("en-US", options)}`;
+    return complete
+      ? `${formattedDate}, ${date.toLocaleTimeString("en-US", options)}`
+      : `${formattedDate}`;
   }
 }

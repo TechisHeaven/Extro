@@ -6,12 +6,13 @@ import AreaChartLinear from "@/components/ui/Charts/AreaChartLinear";
 import MainCard from "./MainCard";
 import React from "react";
 import AddExpense from "@/components/ui/Expense/AddExpense";
+import { cn } from "@/lib/utils";
 
 export default async function Home() {
   return (
     <main className=" p-4 w-full max-w-[1400px] m-auto">
-      <div className="heading inline-flex items-center justify-between w-full">
-        <div>
+      <div className="heading inline-flex items-center justify-end sm:justify-between w-full">
+        <div className="hidden sm:block">
           <h3 className="text-2xl font-semibold">Welcome, Himanshu</h3>
           <h6 className="text-xs text-secondaryColor">
             Track, Manage and Explore all Expenses.
@@ -22,7 +23,16 @@ export default async function Home() {
           <AddExpense />
         </div>
       </div>
-      <div className="cards grid grid-cols-3 m-4 gap-4">
+      <div className="mobileView  text-center flex sm:hidden flex-col gap-2 my-4">
+        <h6 className="text-sm text-secondaryColor font-semibold">
+          Spend this Week
+        </h6>
+        <h1 className="text-6xl font-semibold">
+          <span className="text-lg text-secondaryColor">$</span>12,000.
+          <span className="text-lg">00</span>
+        </h1>
+      </div>
+      <div className={cn("cards  grid-cols-3 m-4 gap-4 hidden sm:grid")}>
         <MainCard title="Total Expense">
           <ExpenseCard />
         </MainCard>

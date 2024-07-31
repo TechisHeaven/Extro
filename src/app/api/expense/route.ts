@@ -1,4 +1,4 @@
-import { Transaction } from "@/components/ui/Table/MainTable";
+import { Transaction } from "@/types/types/types.main";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // defaults to auto
@@ -9,10 +9,11 @@ export async function GET(request: Request) {
   const data: Transaction[] = [
     {
       id: "m5gr84i9",
-      amount: 316,
+      amount: 326,
       status: "success",
       timestamp: new Date().getTime(),
       name: "Butter Delight Biscuit",
+      category: "snacks",
     },
     {
       id: "3u1reuv4",
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
       status: "success",
       timestamp: new Date().getTime(),
       name: "Butter Delight Biscuit",
+      category: "groceries",
     },
     {
       id: "derv1ws0",
@@ -27,6 +29,7 @@ export async function GET(request: Request) {
       status: "processing",
       timestamp: 1721700268811,
       name: "Butter Delight Biscuit",
+      category: "groceries",
     },
     {
       id: "5kma53ae",
@@ -34,6 +37,7 @@ export async function GET(request: Request) {
       status: "success",
       timestamp: 1721154600,
       name: "Butter Delight Biscuit",
+      category: "groceries",
     },
     {
       id: "bhqecj4p",
@@ -41,10 +45,11 @@ export async function GET(request: Request) {
       status: "failed",
       timestamp: Date.now(),
       name: "cButter Delight Biscuit",
+      category: "groceries",
     },
   ];
 
-  return Response.json(
+  return NextResponse.json(
     {
       message: "Successfullly Fetched Expneses",
       success: true,

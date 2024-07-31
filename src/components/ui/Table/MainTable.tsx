@@ -19,16 +19,15 @@ import { columns } from "./columns.data";
 import Debouncer from "@/helpers/debouncer";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAll } from "@/services/expense/fetch";
-
-export type Transaction = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  name: string;
-  timestamp: number | string;
-};
+import { useWindowSize } from "@/hooks/windowSize";
+import { formatTimeStamps } from "@/helpers/time";
+import Table from "./TableMain";
+import SpinnerLoader from "../loader";
+import { Transaction } from "@/types/types/types.main";
 
 export default function MainTable() {
+  const windowSize = useWindowSize();
+  const isMobileView = windowSize.width <= 600 ? true : false;
   // const executeFetch = useAbortableFetch(fetchAll);
   const { isPending, error, data } = useQuery<Transaction[], Error>({
     queryKey: ["fetchAll"],
@@ -45,8 +44,14 @@ export default function MainTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [searchValue, setSearchValue] = React.useState("");
-  const debouncedValue = Debouncer(searchValue, 500);
 
+  const debouncedValue = Debouncer(searchValue, 500);
+  const MobileTableData = data?.map((data) => ({
+    id: data.id,
+    name: data.name,
+    timestamp: data.timestamp,
+    amount: data.amount,
+  }));
   const table = useReactTable({
     data: data || [],
     columns,
@@ -74,6 +79,13 @@ export default function MainTable() {
     table.getColumn("name")?.setFilterValue(debouncedValue);
   }, [debouncedValue, table]);
 
+  const TestTableData: Transaction[] =
+    data?.map((data) => ({
+      category: data.category,
+      name: data.name,
+      amount: data.amount,
+      timestamp: formatTimeStamps(Number(data.timestamp), true),
+    })) || [];
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -93,32 +105,13 @@ export default function MainTable() {
           </div>
         </div>
       </div>
-      <div className="rounded-md border">
-        <TableComponent isPending={isPending} columns={columns} table={table} />
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+      <div className="rounded-md ">
+        {isPending ? (
+          <SpinnerLoader color="border-mainColor" size="small" />
+        ) : (
+          <Table searchTerm={searchValue} data={TestTableData} />
+        )}
+        {/* <TableComponent isPending={isPending} columns={columns} table={table} /> */}
       </div>
     </div>
   );

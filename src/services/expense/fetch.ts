@@ -7,7 +7,7 @@ export async function fetchAll(): Promise<any> {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "force-cache",
+      cache: "default",
     });
 
     const result = await response.json();
