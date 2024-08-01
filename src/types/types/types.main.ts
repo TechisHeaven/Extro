@@ -8,3 +8,11 @@ export type Transaction = {
 };
 
 type CategoryTypes = "snacks" | "groceries";
+
+export interface NotifcationType {
+  id: number | string;
+  title: string;
+  timestamp: number;
+  img?: string;
+  text?: string;
+}

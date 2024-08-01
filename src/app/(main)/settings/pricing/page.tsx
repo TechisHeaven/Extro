@@ -1,14 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ChangePasswordDialog } from "@/components/ui/Dialog/ChangePasswordDialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import SelectDropDown, {
-  DropDownItemProps,
-} from "@/components/ui/SelectDropDown";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
 import React from "react";
 import PricingCard, { PricingProps } from "./pricingCard";
 import InvoiceTab from "./InvoiceTab";

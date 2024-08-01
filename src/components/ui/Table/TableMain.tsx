@@ -1,8 +1,9 @@
 "use client";
+import Debouncer from "@/helpers/debouncer";
 import { cn } from "@/lib/utils";
 import { Transaction } from "@/types/types/types.main";
 import { ArrowDownUp } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 type Direction = "asc" | "desc";
 interface TableProps {
@@ -28,21 +29,27 @@ const Table = ({ data, searchTerm }: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  const debouncedSearchTerm = Debouncer(searchTerm, 500);
+
+  //debouncer configued SearchTerm
   useEffect(() => {
     let tempData = data;
 
     // Search functionality
-    if (searchTerm) {
+    if (debouncedSearchTerm) {
       tempData = tempData.filter((item) =>
         Object.values(item).some((value) =>
-          value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+          value
+            .toString()
+            .toLowerCase()
+            .includes(debouncedSearchTerm.toLowerCase())
         )
       );
     }
 
     // Sort functionality
     if (sortConfig.key) {
-      tempData?.sort((a, b) => {
+      tempData.sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
 
@@ -60,7 +67,7 @@ const Table = ({ data, searchTerm }: TableProps) => {
     }
 
     setFilteredData(tempData);
-  }, [data, searchTerm, sortConfig]);
+  }, [data, debouncedSearchTerm, sortConfig]);
 
   // Pagination logic
   const paginatedData: Transaction[] = filteredData?.slice(
