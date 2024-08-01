@@ -8,8 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "../table";
-import { Transaction } from "./MainTable";
 import SpinnerLoader from "../loader";
+import { Transaction } from "@/types/types/types.main";
 
 export type Renderable<TProps> = React.ReactNode | React.ComponentType<TProps>;
 

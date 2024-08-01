@@ -1,6 +1,5 @@
-import MainTable, { Transaction } from "@/components/ui/Table/MainTable";
+import MainTable from "@/components/ui/Table/MainTable";
 import React from "react";
-import { fetchAll } from "../../../../services/expense/fetch";
 
 export default async function page() {
   return (

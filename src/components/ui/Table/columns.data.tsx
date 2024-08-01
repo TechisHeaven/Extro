@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
 } from "../dropdown-menu";
 import { formatTimeStamps } from "@/helpers/time";
-import { Transaction } from "./MainTable";
+import { Transaction } from "@/types/types/types.main";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -96,11 +96,7 @@ export const columns: ColumnDef<Transaction>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
+
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>

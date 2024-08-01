@@ -82,12 +82,12 @@ const Table = ({ data, searchTerm }: TableProps) => {
         <thead className="block md:table-header-group">
           <tr className="border md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto md:relative ">
             {data.length > 0 &&
-              Object.keys(data[0])
+              (Object.keys(data[0]) as (keyof Transaction)[])
                 .filter((key) => key !== "category")
-                .map((key: keyof Transaction | string) => (
+                .map((key) => (
                   <th
                     key={key}
-                    onClick={() => handleSort(key as keyof Transaction)}
+                    onClick={() => handleSort(key)}
                     className="p-2 px-4 bg-white border text-left block md:table-cell cursor-pointer"
                   >
                     <p className="inline-flex items-center gap-2 capitalize text-sm font-normal text-secondaryColor">
@@ -104,7 +104,7 @@ const Table = ({ data, searchTerm }: TableProps) => {
               key={index}
               className="bg-white md:border border-gray-300 md:border-none md:table-row"
             >
-              {Object.keys(row)
+              {(Object.keys(row) as (keyof Transaction)[])
                 .filter((key) => key !== "category")
                 .map((key) => (
                   <td
