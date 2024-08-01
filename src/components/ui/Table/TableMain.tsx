@@ -3,6 +3,7 @@ import Debouncer from "@/helpers/debouncer";
 import { cn } from "@/lib/utils";
 import { Transaction } from "@/types/types/types.main";
 import { ArrowDownUp } from "lucide-react";
+import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
 
 type Direction = "asc" | "desc";
@@ -122,10 +123,12 @@ const Table = ({ data, searchTerm }: TableProps) => {
                     row.category &&
                     categoryImages[row.category] ? (
                       <div className="inline-flex items-center gap-2">
-                        <img
+                        <Image
                           src={categoryImages[row.category]}
                           alt={row.category}
                           className="w-6 h-6"
+                          width={24}
+                          height={24}
                         />
                         {row[key]}
                       </div>
