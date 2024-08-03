@@ -8,7 +8,7 @@ import SelectDropDown, {
 import { Switch } from "@/components/ui/switch";
 import React from "react";
 
-export default function page() {
+export default function Account() {
   return (
     <div className="flex flex-col gap-8 p-4">
       <div className="Email">

@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import React from "react";
 
-export default function page() {
+export default function Notification() {
   return (
     <div className="flex flex-col gap-4 p-4">
       <div className="notification inline-flex justify-between w-full items-start">

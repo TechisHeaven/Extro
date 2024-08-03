@@ -2,9 +2,11 @@
 import Debouncer from "@/helpers/debouncer";
 import { cn } from "@/lib/utils";
 import { Transaction } from "@/types/types/types.main";
-import { ArrowDownUp } from "lucide-react";
+import { ArrowDownUp, Info } from "lucide-react";
 import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
+import { CustomDialog } from "../Dialog/CustomDialog";
+import TransactionContainer from "../Transaction/TransactionContainer";
 
 type Direction = "asc" | "desc";
 interface TableProps {
@@ -13,8 +15,8 @@ interface TableProps {
 }
 
 const categoryImages = {
-  groceries: "avacado.png",
-  snacks: "snacks.png",
+  groceries: "/avacado.png",
+  snacks: "/snacks.png",
   // add other categories and their images
 };
 
@@ -27,7 +29,14 @@ const Table = ({ data, searchTerm }: TableProps) => {
     key: "name",
     direction: "asc",
   });
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction>({
+    amount: 0,
+    name: "",
+    timestamp: 0,
+    category: "groceries",
+  });
   const itemsPerPage = 10;
 
   const debouncedSearchTerm = Debouncer(searchTerm, 500);
@@ -84,6 +93,11 @@ const Table = ({ data, searchTerm }: TableProps) => {
     setSortConfig({ key, direction });
   };
 
+  function handleSelectTransaction(transaction: Transaction) {
+    setSelectedTransaction(transaction);
+    setIsDialogOpen(!isDialogOpen);
+  }
+
   return (
     <div>
       <table className="min-w-full border-collapse block md:table">
@@ -104,43 +118,61 @@ const Table = ({ data, searchTerm }: TableProps) => {
                     </p>
                   </th>
                 ))}
+            <th className="p-2 px-4 bg-white border text-center block md:table-cell cursor-pointer">
+              <p className="inline-flex items-center gap-2 capitalize text-sm font-normal text-secondaryColor">
+                Info
+              </p>
+            </th>
           </tr>
         </thead>
-        <tbody className="block md:table-row-group">
-          {paginatedData?.map((row, index) => (
-            <tr
-              key={index}
-              className="bg-white md:border border-gray-300 md:border-none md:table-row"
-            >
-              {(Object.keys(row) as (keyof Transaction)[])
-                .filter((key) => key !== "category")
-                .map((key) => (
-                  <td
-                    key={key}
-                    className={cn("p-4 md:border text-left w-fit table-cell")}
-                  >
-                    {key === "name" &&
-                    row.category &&
-                    categoryImages[row.category] ? (
-                      <div className="inline-flex items-center gap-2">
-                        <Image
-                          src={categoryImages[row.category]}
-                          alt={row.category}
-                          className="w-6 h-6"
-                          width={24}
-                          height={24}
-                        />
-                        {row[key]}
-                      </div>
-                    ) : key === "amount" ? (
-                      `$${row[key]}`
-                    ) : (
-                      row[key]
-                    )}
-                  </td>
-                ))}
+        <tbody className="block md:table-row-group border">
+          {paginatedData.length > 0 ? (
+            paginatedData?.map((row, index) => (
+              <tr
+                key={index}
+                className="bg-white md:table-row cursor-pointer hover:bg-gray-50 transition-colors"
+              >
+                {/* md:border border-gray-300 md:border-none */}
+                {(Object.keys(row) as (keyof Transaction)[])
+                  .filter((key) => key !== "category")
+                  .map((key) => (
+                    <td
+                      key={key}
+                      className={cn("p-4 text-left w-fit table-cell")}
+                    >
+                      {key === "name" &&
+                      row.category &&
+                      categoryImages[row.category] ? (
+                        <div className="inline-flex items-center gap-2">
+                          <Image
+                            src={categoryImages[row.category]}
+                            alt={row.category}
+                            className="w-6 h-6"
+                            width={24}
+                            height={24}
+                          />
+                          {row[key]}
+                        </div>
+                      ) : key === "amount" ? (
+                        `$${row[key]}`
+                      ) : (
+                        row[key]
+                      )}
+                    </td>
+                  ))}
+                <div className="p-4 w-full inline-flex items-center justify-center">
+                  <Info
+                    className="w-4 h-4"
+                    onClick={() => handleSelectTransaction(row)}
+                  />
+                </div>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td className="">No Result Found</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
       <div className="flex pagination justify-end gap-2 mt-4">
@@ -169,6 +201,9 @@ const Table = ({ data, searchTerm }: TableProps) => {
           Next
         </button>
       </div>
+      <CustomDialog open={isDialogOpen} setIsDialogOpen={setIsDialogOpen}>
+        <TransactionContainer transaction={selectedTransaction} />
+      </CustomDialog>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import PricingCard, { PricingProps } from "./pricingCard";
 import InvoiceTab from "./InvoiceTab";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-export default function page() {
+export default function Pricing() {
   return (
     <div className="flex flex-col gap-8 p-4">
       <div>

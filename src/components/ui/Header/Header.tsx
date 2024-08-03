@@ -28,6 +28,7 @@ const Header = () => {
   return (
     <div className="inline-flex items-center gap-4 justify-end w-full p-2 px-4 border-b-2">
       <CustomPopover
+        className="w-full"
         trigger={
           <div className="notification relative inline-flex gap-1 items-center hover:bg-gray-200 p-1 px-2 transition-colors rounded-md">
             <div className="relative">
@@ -39,7 +40,7 @@ const Header = () => {
         }
       >
         <h1>Notification</h1>
-        <ScrollArea className="items flex-col flex gap-2 py-4  h-80">
+        <ScrollArea className="items flex-col flex gap-2 py-4 h-80 w-full">
           {NotificationData.map((notification: NotifcationType) => {
             return (
               <Notification

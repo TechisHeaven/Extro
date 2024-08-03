@@ -27,7 +27,9 @@ const SidebarMain = () => {
       </div>
       <div className="bottom-items flex flex-col gap-8 absolute bottom-10">
         <CustomToolTip content="Help">
-          <HelpCircle />
+          <a href="mailto:techisHeaven@outlook.com?subject=Help Query&body=Write your query here or to reach out us.">
+            <HelpCircle />
+          </a>
         </CustomToolTip>
         <CustomToolTip content="Logout">
           <LogOut />

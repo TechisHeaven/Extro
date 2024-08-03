@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import React from "react";
 
-export default function page() {
+export default function SettingsMe() {
   const userName = "John Doe";
   const aboutMe = "Discuss only about Coding, Gym, and Healthy Diet..✌";
   return (

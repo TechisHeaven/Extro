@@ -13,10 +13,14 @@ import SearchInput from "@/components/ui/Input/SearchInput";
 import SideBarItem from "@/components/ui/Settings/SideBarItem";
 import BackButton from "@/components/ui/Buttons/BackButton";
 
-export default function Template({ children }: { children: React.ReactNode }) {
+export default function SettingDialog({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <CustomDialog
-      redirect="/"
+      goBack
       className=" md:max-w-screen-md max-h-[100dvh] sm:max-h-[80dvh] md:max-h-[80dvh] h-full"
     >
       <div className="inline-flex gap-0 sm:gap-0 md:gap-4 w-full">

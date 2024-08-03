@@ -7,7 +7,7 @@ import SelectDropDown, {
 import Image from "next/image";
 import React from "react";
 
-export default function page() {
+export default function Appearance() {
   return (
     <div className="flex flex-col gap-8 p-4">
       <div className="Name flex flex-col gap-2">

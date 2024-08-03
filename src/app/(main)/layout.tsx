@@ -8,8 +8,13 @@ import BottomSideBar from "@/components/ui/SidebarComponents/BottomSideBar";
 interface LayoutProps {
   children: React.ReactNode;
   table: React.ReactNode;
+  settingDialog: React.ReactNode;
 }
-export default function Layout({ children, table }: LayoutProps) {
+export default function Layout({
+  children,
+  table,
+  settingDialog,
+}: LayoutProps) {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   const size = useWindowSize();
@@ -23,6 +28,7 @@ export default function Layout({ children, table }: LayoutProps) {
         <Header />
         {children}
         {isHomePage && table}
+        {settingDialog}
       </div>
     </div>
   );
