@@ -9,7 +9,7 @@ import {
   SettingsIcon,
   User,
 } from "lucide-react";
-import SearchInput from "@/components/ui/Input/SearchInput";
+import SearchInput from "@/components/ui/Input/CustomInput";
 import SideBarItem from "@/components/ui/Settings/SideBarItem";
 import BackButton from "@/components/ui/Buttons/BackButton";
 

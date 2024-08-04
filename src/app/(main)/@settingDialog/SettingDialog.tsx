@@ -1,15 +1,7 @@
 import { CustomDialog } from "@/components/ui/Dialog/CustomDialog";
 import React from "react";
-import {
-  Bell,
-  ChevronLeft,
-  Coins,
-  Laptop,
-  Search,
-  SettingsIcon,
-  User,
-} from "lucide-react";
-import SearchInput from "@/components/ui/Input/SearchInput";
+import { Bell, Coins, Laptop, Search, SettingsIcon, User } from "lucide-react";
+import SearchInput from "@/components/ui/Input/CustomInput";
 import SideBarItem from "@/components/ui/Settings/SideBarItem";
 import BackButton from "@/components/ui/Buttons/BackButton";
 

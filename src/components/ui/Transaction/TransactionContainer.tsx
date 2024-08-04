@@ -24,7 +24,7 @@ const TransactionContainer = ({ transaction }: TransactionContainerProps) => {
   return (
     <div className="container p-8">
       <h1 className="font-semibold text-xl">Transaction Details</h1>
-      <div className="">
+      <div className="flex flex-col gap-4">
         <div className="inline-flex items-center justify-between w-full py-2">
           <div className="inline-flex items-center gap-2 font-semibold">
             <Coins className="w-4 h-4" />
@@ -58,7 +58,7 @@ const TransactionContainer = ({ transaction }: TransactionContainerProps) => {
             </div>
           </div>
         </div>
-        <div className="receipt">
+        <div className="receipt p-2 bg-gray-100 rounded-md">
           <h6 className="font-semibold">Receipts</h6>
           <div className="images py-2 ">
             <Image

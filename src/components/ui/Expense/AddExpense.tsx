@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { SheetClose, SheetFooter } from "@/components/ui/sheet";
 import { Coins, CreditCard, Plus, ScanQrCode } from "lucide-react";
@@ -9,6 +9,7 @@ import SelectDropDown from "../SelectDropDown";
 import SheetComponent from "../Sheet/Sheet";
 import { DrawerComponent } from "../Drawer/Drawer";
 import { useWindowSize } from "@/hooks/windowSize";
+import { toast } from "sonner";
 
 export default function AddExpense() {
   const size = useWindowSize();
@@ -82,6 +83,17 @@ const SelectItemsCatogeries = [
 ];
 
 const AddExpenseComponent = () => {
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  function handleFileClick() {
+    if (imageInputRef.current) {
+      imageInputRef.current.click();
+    }
+  }
+
+  //handle submit function
+  function handleSubmit() {
+    toast.success("Expense Created!");
+  }
   return (
     <>
       <div className="grid gap-4 py-4 place-items-center w-full">
@@ -111,11 +123,24 @@ const AddExpenseComponent = () => {
         </div>
       </div>
       <SheetFooter className="inline-flex justify-between w-full">
-        <Button className="inline-flex gap-2 items-center bg-mainColor">
+        <input
+          ref={imageInputRef}
+          type="file"
+          hidden
+          accept="image/*"
+          id="file"
+          name="file"
+        />
+        <Button
+          onClick={handleFileClick}
+          className="inline-flex gap-2 items-center bg-mainColor"
+        >
           Scan <ScanQrCode />
         </Button>
         <SheetClose asChild>
-          <Button type="submit">Save changes</Button>
+          <Button onClick={handleSubmit} type="submit">
+            Save changes
+          </Button>
         </SheetClose>
       </SheetFooter>
     </>

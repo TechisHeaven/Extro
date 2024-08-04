@@ -32,9 +32,11 @@ export function CustomDialog({
   function handleClose() {
     if (redirect) {
       router.push(redirect);
+      return;
     }
     if (goBack) {
       router.back();
+      return;
     }
     setIsDialogOpen(!open);
   }

@@ -1,20 +1,22 @@
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { HTMLInputTypeAttribute } from "react";
 interface SearchInputProps {
   isDisabled?: boolean;
   placeholder?: string;
   value?: string;
+  type?: HTMLInputTypeAttribute;
   icon?: React.ReactNode;
   onChange?: (value: any) => void;
   className?: React.ComponentProps<"div">["className"];
 }
-const SearchInput = ({
+const CustomInput = ({
   isDisabled = false,
   placeholder,
   value,
   onChange,
   className,
   icon,
+  type,
 }: SearchInputProps) => {
   return (
     <div
@@ -25,6 +27,7 @@ const SearchInput = ({
     >
       {icon}
       <input
+        type={type || "text"}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -35,4 +38,4 @@ const SearchInput = ({
   );
 };
 
-export default SearchInput;
+export default CustomInput;

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import SearchInput from "../Input/SearchInput";
+import SearchInput from "../Input/CustomInput";
 import Debouncer from "@/helpers/debouncer";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAll } from "@/services/expense/fetch";
