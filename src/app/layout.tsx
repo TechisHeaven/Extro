@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import ReactQueryClientProvider from "@/providers/reactQueryProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
         <Toaster />
       </body>
     </html>

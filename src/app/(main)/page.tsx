@@ -7,6 +7,7 @@ import MainCard from "./MainCard";
 import React from "react";
 import AddExpense from "@/components/ui/Expense/AddExpense";
 import { cn } from "@/lib/utils";
+import MainCardContainer from "./MainCardContainer";
 
 export default async function Home() {
   return (
@@ -33,31 +34,7 @@ export default async function Home() {
         </h1>
       </div>
       <div className={cn("cards  grid-cols-3 m-4 gap-4 hidden sm:grid")}>
-        <MainCard title="Total Expense">
-          <ExpenseCard />
-        </MainCard>
-        <MainCard title="Analyze Expense">
-          <div className="flex flex-col justify-center text-4xl font-semibold">
-            <h4>
-              120
-              <span className="text-xs text-green-500 font-semibold inline-flex items-center gap-1">
-                <ArrowUp className="w-4" />
-                18%
-              </span>
-            </h4>
-            <p className="text-xs text-secondaryColor">This week</p>
-          </div>
-          <AreaChartLinear />
-        </MainCard>
-        <MainCard
-          title="Wallet"
-          className="inline-flex items-center justify-center w-full"
-        >
-          <Button className="inline-flex items-center gap-2 text-sm bg-mainColor">
-            <Wallet className="w-4" />
-            Connect Wallet
-          </Button>
-        </MainCard>
+        <MainCardContainer />
       </div>
     </main>
   );

@@ -4,6 +4,10 @@ interface SearchInputProps {
   isDisabled?: boolean;
   placeholder?: string;
   value?: string;
+  name?: string;
+  id?: string;
+  accept?: HTMLInputElement["accept"];
+  defaultValue?: string;
   type?: HTMLInputTypeAttribute;
   icon?: React.ReactNode;
   onChange?: (value: any) => void;
@@ -13,10 +17,14 @@ const CustomInput = ({
   isDisabled = false,
   placeholder,
   value,
+  name,
   onChange,
   className,
   icon,
   type,
+  id,
+  accept,
+  defaultValue,
 }: SearchInputProps) => {
   return (
     <div
@@ -29,6 +37,10 @@ const CustomInput = ({
       <input
         type={type || "text"}
         value={value}
+        name={name}
+        accept={accept}
+        defaultValue={defaultValue}
+        id={id}
         onChange={onChange}
         placeholder={placeholder}
         disabled={isDisabled}
