@@ -15,7 +15,7 @@ export async function sendMagicURLEmail({
   try {
     const url = `${
       process.env.NEXT_PUBLIC_URL
-    }/auth?v=${magicVerifyToken}&${encodeURIComponent(email)}`;
+    }/api/auth?v=${magicVerifyToken}&email=${encodeURIComponent(email)}`;
     const { data, error } = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
       to: [email],

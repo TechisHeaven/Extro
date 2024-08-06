@@ -1,22 +1,43 @@
 "use server";
-
+import { authSchema } from "./../../schemas/zod/auth/schema";
 import { notion } from "@/config/notion.config";
 import { authDatabaseId } from "@/constants/database.constants";
+import {
+  COOKIE_EXPIRE_TIME,
+  HASH_EXPIRE_TIME,
+  HTTP_STATUS_CODES,
+} from "@/constants/main.constants";
 import { CreateError } from "@/helpers/createError";
-import { createHash } from "@/helpers/createHash";
+import { createHash } from "@/helpers/handleHash";
 import { ReturnResultProps } from "@/helpers/returnResult";
 import { sendMagicURLEmail } from "@/helpers/sendEmail";
 import { createCookieSession } from "@/helpers/session/handleCookies";
 import { decrypt } from "@/helpers/session/handleJWTsession";
 import { ResultError } from "@/types/types/types.error";
-
 import { cookies } from "next/headers";
+import type { ZodIssue } from "zod";
 
-export async function loginAction(formData: FormData) {
+export async function loginAction(
+  state: { errors: { email?: string[]; success?: boolean } },
+  formData: FormData
+): Promise<{ errors: ZodIssue[] } | any> {
   try {
-    const email = formData.get("email") as string;
+    const validatedFields = authSchema.safeParse({
+      email: formData.get("email"),
+    });
+
+    // Return early if the form data is invalid
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+      };
+    }
+
+    const email = validatedFields.data.email;
     if (!email) {
-      CreateError(404, "Email is Required");
+      return {
+        errors: { email: ["Email is required"] },
+      };
     }
     const response = await notion.databases.query({
       database_id: authDatabaseId,
@@ -31,7 +52,9 @@ export async function loginAction(formData: FormData) {
     if (!response.results[0]) {
       await createUser(email);
     }
-    const userResponse = response.results[0];
+
+    // TODO: Change is type and fix type error here.
+    const userResponse = response.results[0] as any;
     const user = {
       id: userResponse.id,
       name: userResponse?.properties.name.title,
@@ -40,10 +63,11 @@ export async function loginAction(formData: FormData) {
 
     // Create the session and send email
     // Save the session in a cookie
-    const sessionToken = await createCookieSession(10, user);
+    // const sessionToken = await createCookieSession(COOKIE_EXPIRE_TIME, user);
 
-    const magichash = await createHash(user.email, 1);
-    //email props
+    const magichash = await createHash(user.email, HASH_EXPIRE_TIME);
+
+    // email props
     const emailProps = {
       name: user.name,
       email: user.email,
@@ -54,15 +78,6 @@ export async function loginAction(formData: FormData) {
     await notion.pages.update({
       page_id: userResponse.id,
       properties: {
-        sessionToken: {
-          rich_text: [
-            {
-              text: {
-                content: sessionToken,
-              },
-            },
-          ],
-        },
         magicToken: {
           rich_text: [
             {
@@ -83,7 +98,6 @@ export async function loginAction(formData: FormData) {
         },
       },
     });
-
     return ReturnResultProps(200, "Email Send Successfully");
   } catch (error: unknown) {
     if (error instanceof ResultError) {
@@ -128,16 +142,20 @@ export async function createUser(email: string) {
       },
     };
 
-    const response = await notion.pages.create({
+    const response = (await notion.pages.create({
       parent: {
         database_id: authDatabaseId,
       },
       properties: properties, // This object should follow the structure defined in your Notion database schema
-    });
+    })) as any;
 
     if (!response) {
-      CreateError(409, "Failed to Create User");
+      CreateError(
+        HTTP_STATUS_CODES.clientErrors.ExpectationFailed.status,
+        "Failed to Create User"
+      );
     }
+
     const user = {
       id: response?.id,
       name: response?.properties.name.title,
@@ -146,9 +164,9 @@ export async function createUser(email: string) {
 
     // Create the session and send email
     // Save the session in a cookie
-    const sessionToken = await createCookieSession(10, user);
+    // const sessionToken = await createCookieSession(COOKIE_EXPIRE_TIME, user);
 
-    const magichash = await createHash(user.email, 1);
+    const magichash = await createHash(user.email, HASH_EXPIRE_TIME);
     //email props
     const emailProps = {
       name: user.name,
@@ -160,15 +178,6 @@ export async function createUser(email: string) {
     await notion.pages.update({
       page_id: user.id,
       properties: {
-        sessionToken: {
-          rich_text: [
-            {
-              text: {
-                content: sessionToken,
-              },
-            },
-          ],
-        },
         magicToken: {
           rich_text: [
             {

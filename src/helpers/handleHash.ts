@@ -1,4 +1,6 @@
+import { HASH_EXPIRE_TIME } from "@/constants/main.constants";
 import crypto from "node:crypto";
+import { CreateError } from "./createError";
 
 export async function createHash(email: string, expirationInMinutes: number) {
   try {
@@ -15,26 +17,23 @@ export async function createHash(email: string, expirationInMinutes: number) {
 }
 
 // Function to verify the hash
-export function verifyHash(
-  email: string,
-  hash: string,
-  expirationTimestamp: number
-) {
+export async function verifyHash(email: string, hash: string) {
   try {
     const currentTimestamp = Date.now();
+    const expirationTimestamp = Date.now() + HASH_EXPIRE_TIME * 60 * 1000;
     if (currentTimestamp > expirationTimestamp) {
-      return { valid: false, message: "Hash has expired" };
+      CreateError(401, "Hash has expired");
     }
 
-    const secret = "thisismyhashsecret" + email;
-    const computedHash = crypto.createHash("md5").update(secret).digest("hex");
-
-    return {
-      valid: hash === computedHash,
-      message: hash === computedHash ? true : false,
-    };
-  } catch (error) {
-    console.log(error);
-    return { valid: false, message: "Verification failed" };
+    const computedHash = await createHash(email, HASH_EXPIRE_TIME);
+    return hash === computedHash.hash;
+  } catch (error: any) {
+    // CreateError(error.status, error.message);
+    if (error) {
+      return {
+        status: error.status,
+        message: error.message,
+      };
+    }
   }
 }
