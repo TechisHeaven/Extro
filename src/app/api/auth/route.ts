@@ -6,13 +6,11 @@ import { createCookieSession } from "@/helpers/session/handleCookies";
 import { notion } from "@/config/notion.config";
 import { authDatabaseId } from "@/constants/database.constants";
 import { DatabaseResponseType } from "@/types/types/types.notion";
-export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const verificationHash = searchParams.get("v");
+  const email = searchParams.get("email");
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const verificationHash = searchParams.get("v");
-    const email = searchParams.get("email");
-
     if (!verificationHash || !email) {
       const redirectUrl = new URL("/login", request.url);
       redirectUrl.searchParams.set("error", "Invalid URL");
@@ -21,14 +19,10 @@ export async function GET(request: NextRequest) {
     if (verificationHash && email) {
       const hashVerified = (await verifyHash(email, verificationHash)) as any;
       if (!hashVerified && hashVerified.status !== 200) {
-        if (hashVerified?.status === 401) {
-          const redirectUrl = new URL("/login", request.url);
-          redirectUrl.searchParams.set("error", "URL Expired");
-          return NextResponse.redirect(redirectUrl);
-        }
-
         const redirectUrl = new URL("/login", request.url);
-        redirectUrl.searchParams.set("error", "Failed to login");
+        const errorMsg =
+          hashVerified?.status === 401 ? "URL Expired" : "Failed to login";
+        redirectUrl.searchParams.set("error", errorMsg);
         return NextResponse.redirect(redirectUrl);
       }
 
