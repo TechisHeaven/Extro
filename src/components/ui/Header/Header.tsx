@@ -9,6 +9,7 @@ import { Button } from "../button";
 import Notification from "./Notification";
 import { NotifcationType } from "@/types/types/types.main";
 import { ScrollArea } from "../scroll-area";
+import Logout from "./Logout";
 
 const Header = () => {
   const NotificationData: NotifcationType[] = [
@@ -101,7 +102,7 @@ const Header = () => {
               <Settings className="w-4  h-4" />
               Help Center
             </Link>
-            <Button className="bg-mainColor w-full">Logout</Button>
+            <Logout />
           </div>
         </div>
       </CustomPopover>

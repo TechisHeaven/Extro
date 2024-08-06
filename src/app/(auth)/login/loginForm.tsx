@@ -34,7 +34,9 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
   }, [state]);
 
   useEffect(() => {
-    toast.error(searchParams?.error);
+    if (searchParams?.error) {
+      toast.error(searchParams?.error);
+    }
   }, [searchParams?.error]);
 
   if (showSendEmailDialog) {
