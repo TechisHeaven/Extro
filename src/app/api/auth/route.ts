@@ -7,7 +7,8 @@ import { notion } from "@/config/notion.config";
 import { authDatabaseId } from "@/constants/database.constants";
 import { DatabaseResponseType } from "@/types/types/types.notion";
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
+  const { searchParams } = new URL(request.url);
+  // const searchParams = request.nextUrl.searchParams;
   const verificationHash = searchParams.get("v");
   const email = searchParams.get("email");
   try {
