@@ -3,7 +3,6 @@ import { authSchema } from "./../../schemas/zod/auth/schema";
 import { notion } from "@/config/notion.config";
 import { authDatabaseId } from "@/constants/database.constants";
 import {
-  COOKIE_EXPIRE_TIME,
   HASH_EXPIRE_TIME,
   HTTP_STATUS_CODES,
 } from "@/constants/main.constants";
@@ -11,7 +10,6 @@ import { CreateError } from "@/helpers/createError";
 import { createHash } from "@/helpers/handleHash";
 import { ReturnResultProps } from "@/helpers/returnResult";
 import { sendMagicURLEmail } from "@/helpers/sendEmail";
-import { createCookieSession } from "@/helpers/session/handleCookies";
 import { decrypt } from "@/helpers/session/handleJWTsession";
 import { ResultError } from "@/types/types/types.error";
 import { cookies } from "next/headers";
@@ -73,10 +71,16 @@ export async function loginAction(
       email: user.email,
       magicVerifyToken: magichash.hash!,
     };
-    await sendMagicURLEmail(emailProps);
+    const result = await sendMagicURLEmail(emailProps);
+
+    if (!result || result.status !== 200) {
+      return {
+        errors: "Failed to Send Email",
+      };
+    }
 
     await notion.pages.update({
-      page_id: userResponse.id,
+      page_id: user.id,
       properties: {
         magicToken: {
           rich_text: [
@@ -88,13 +92,7 @@ export async function loginAction(
           ],
         },
         magicTokenExpires: {
-          rich_text: [
-            {
-              text: {
-                content: magichash.hash,
-              },
-            },
-          ],
+          number: magichash.expirationTimestamp,
         },
       },
     });
@@ -117,7 +115,7 @@ export async function createUser(email: string) {
         rich_text: [
           {
             text: {
-              content: "example@example.com",
+              content: "",
             },
           },
         ],
@@ -126,7 +124,7 @@ export async function createUser(email: string) {
         rich_text: [
           {
             text: {
-              content: "example@example.com",
+              content: "",
             },
           },
         ],
@@ -135,7 +133,7 @@ export async function createUser(email: string) {
         rich_text: [
           {
             text: {
-              content: "example@example.com",
+              content: "",
             },
           },
         ],
@@ -162,9 +160,7 @@ export async function createUser(email: string) {
       email: response?.properties.email.email,
     };
 
-    // Create the session and send email
-    // Save the session in a cookie
-    // const sessionToken = await createCookieSession(COOKIE_EXPIRE_TIME, user);
+    // Create the session hash and send email
 
     const magichash = await createHash(user.email, HASH_EXPIRE_TIME);
     //email props
@@ -173,7 +169,14 @@ export async function createUser(email: string) {
       email: user.email,
       magicVerifyToken: magichash.hash!,
     };
-    await sendMagicURLEmail(emailProps);
+
+    const result = await sendMagicURLEmail(emailProps);
+
+    if (!result || result.status !== 200) {
+      return {
+        errors: "Failed to Send Email",
+      };
+    }
 
     await notion.pages.update({
       page_id: user.id,
@@ -188,13 +191,7 @@ export async function createUser(email: string) {
           ],
         },
         magicTokenExpires: {
-          rich_text: [
-            {
-              text: {
-                content: magichash.hash,
-              },
-            },
-          ],
+          number: magichash.expirationTimestamp,
         },
       },
     });

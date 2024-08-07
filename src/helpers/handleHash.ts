@@ -1,8 +1,13 @@
 import { HASH_EXPIRE_TIME } from "@/constants/main.constants";
 import crypto from "node:crypto";
 import { CreateError } from "./createError";
+import { notion } from "@/config/notion.config";
+import { authDatabaseId } from "@/constants/database.constants";
 
-export async function createHash(email: string, expirationInMinutes: number) {
+export async function createHash(
+  email: string,
+  expirationInMinutes: number
+): Promise<{ hash: string; expirationTimestamp: number }> {
   try {
     const secret = "thisismyhashsecret" + email;
     const hash = await crypto.createHash("md5").update(secret).digest("hex");
@@ -25,10 +30,27 @@ export async function verifyHash(email: string, hash: string) {
       CreateError(401, "Hash has expired");
     }
 
-    const computedHash = await createHash(email, HASH_EXPIRE_TIME);
-    return hash === computedHash.hash;
+    const response = await notion.databases.query({
+      database_id: authDatabaseId,
+      filter: {
+        property: "email",
+        rich_text: {
+          equals: email,
+        },
+      },
+    });
+
+    const userResponse = response.results[0] as any;
+    const computedHash =
+      userResponse?.properties.magicToken.rich_text[0].plain_text;
+    if (!computedHash) {
+      CreateError(401, "Session not found");
+    }
+
+    return hash === computedHash;
   } catch (error: any) {
     // CreateError(error.status, error.message);
+    console.log(error);
     if (error) {
       return {
         status: error.status,

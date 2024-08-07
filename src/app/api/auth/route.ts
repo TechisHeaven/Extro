@@ -19,8 +19,15 @@ export async function GET(request: NextRequest) {
     }
     if (verificationHash && email) {
       const hashVerified = (await verifyHash(email, verificationHash)) as any;
-      if (!hashVerified && hashVerified.status !== 200) {
+      if (!hashVerified) {
         const redirectUrl = new URL("/login", request.url);
+
+        redirectUrl.searchParams.set("error", "unAuthorized");
+        return NextResponse.redirect(redirectUrl);
+      }
+      if (hashVerified.status !== undefined && hashVerified?.status !== 200) {
+        const redirectUrl = new URL("/login", request.url);
+
         const errorMsg =
           hashVerified?.status === 401 ? "URL Expired" : "Failed to login";
         redirectUrl.searchParams.set("error", errorMsg);
@@ -67,13 +74,7 @@ export async function GET(request: NextRequest) {
             ],
           },
           magicTokenExpires: {
-            rich_text: [
-              {
-                text: {
-                  content: "",
-                },
-              },
-            ],
+            number: null,
           },
         },
       });

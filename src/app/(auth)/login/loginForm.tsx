@@ -23,10 +23,13 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
   const [state, formAction] = useFormState(loginAction, initialState);
   const [showSendEmailDialog, setShowSendEmailDialog] =
     useState<boolean>(false);
-  const emailError = state?.errors?.email[0];
   useEffect(() => {
-    if (state?.errors?.email[0]) {
+    if (state?.errors?.email) {
+      const emailError = state?.errors?.email[0];
       toast.error(emailError);
+    }
+    if (state?.errors) {
+      toast.error(state?.errors);
     }
     if (state?.status === 200) {
       setShowSendEmailDialog(true);
