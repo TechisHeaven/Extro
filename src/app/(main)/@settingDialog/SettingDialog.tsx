@@ -48,6 +48,7 @@ export default function SettingDialog({
           <div className="Header p-4 inline-flex justify-between w-full">
             <div className="search w-full">
               <SearchInput
+                autoFocus={false}
                 icon={
                   <Search className="w-4 text-secondaryColor placeholder:text-sm" />
                 }

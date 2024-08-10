@@ -41,18 +41,22 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
     }
   }, [searchParams?.error]);
 
+  //TODO: Will Create Google auth with Next Auth or Oauth
+  function handleGoogleAuth() {
+    toast.warning("Please Login With Email for Now 😁");
+  }
   return (
-    <form
-      action={formAction}
-      className="border max-w-[420px] w-full border-white p-8 rounded-2xl bg-gradient-to-b via-white via-30% from-10% from-indigo-50  shadow-md flex flex-col gap-4"
-    >
+    <div className="border max-w-[420px] w-full border-white p-8 rounded-2xl bg-gradient-to-b via-white via-30% from-10% from-indigo-50  shadow-md flex flex-col gap-4">
       <div className="text-center">
         <h1 className="font-semibold">Extro</h1>
         <h1 className="text-2xl font-semibold">Welcome Back</h1>
         <p className="textr text-xs">Welcome Back, Please Enter your Email.</p>
       </div>
       <div className="social-login grid-cols-3 inline-flex items-center ">
-        <Button className="bg-white w-full p-1 aspect-square  border shadow-sm hover:bg-white hover:shadow-md transition-shadow">
+        <Button
+          onClick={handleGoogleAuth}
+          className="bg-white w-full p-1 aspect-square  border shadow-sm hover:bg-white hover:shadow-md transition-shadow"
+        >
           <Image
             src={"/google-icon.webp"}
             width={48}
@@ -64,18 +68,20 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
         </Button>
       </div>
       <p className="text-center text-xs text-secondaryColor capitalize">or</p>
-      <div className="email">
-        <Label>Email</Label>
-        <CustomInput
-          icon={<Mail className="w-4 h-4 text-secondaryColor " />}
-          type="text"
-          name="email"
-          placeholder="John@doe.com"
-          className="bg-white"
-        />
-      </div>
-      <LoginButton />
-    </form>
+      <form action={formAction} className="flex flex-col gap-2">
+        <div className="email">
+          <Label>Email</Label>
+          <CustomInput
+            icon={<Mail className="w-4 h-4 text-secondaryColor " />}
+            type="text"
+            name="email"
+            placeholder="John@doe.com"
+            className="bg-white"
+          />
+        </div>
+        <LoginButton />
+      </form>
+    </div>
   );
 };
 

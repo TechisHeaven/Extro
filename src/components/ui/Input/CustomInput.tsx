@@ -11,10 +11,12 @@ interface SearchInputProps {
   type?: HTMLInputTypeAttribute;
   icon?: React.ReactNode;
   onChange?: (value: any) => void;
+  autoFocus?: boolean;
   className?: React.ComponentProps<"div">["className"];
 }
 const CustomInput = ({
   isDisabled = false,
+  autoFocus = false,
   placeholder,
   value,
   name,
@@ -37,6 +39,7 @@ const CustomInput = ({
       <input
         type={type || "text"}
         value={value}
+        autoFocus={autoFocus}
         name={name}
         accept={accept}
         defaultValue={defaultValue}

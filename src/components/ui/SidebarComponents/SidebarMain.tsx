@@ -8,8 +8,18 @@ import {
 import React from "react";
 import SidebarNavItem, { SidebarNavItemProps } from "./SidebarNavItem";
 import CustomToolTip from "@/components/ui//CustomToolTip/CustomToolTip";
+import { logout } from "@/actions/auth/action";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const SidebarMain = () => {
+  //handle Logout User
+  const router = useRouter();
+  async function handleLogout() {
+    await logout();
+    router.push("/login");
+    toast.success("Logout Successfully!");
+  }
   return (
     <div className="min-w-16 h-dvh p-4 flex flex-col border-r-2 font-semibold sticky top-0">
       <h1 className="Logo text-2xl font-semibold">ET</h1>
@@ -32,7 +42,7 @@ const SidebarMain = () => {
           </a>
         </CustomToolTip>
         <CustomToolTip content="Logout">
-          <LogOut />
+          <LogOut onClick={handleLogout} />
         </CustomToolTip>
       </div>
     </div>
