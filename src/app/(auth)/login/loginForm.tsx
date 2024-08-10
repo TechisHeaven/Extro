@@ -33,6 +33,7 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
     }
     if (state?.status === 200) {
       setShowSendEmailDialog(true);
+      toast.success("Email sent successfully");
     }
   }, [state]);
 
@@ -42,13 +43,6 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
     }
   }, [searchParams?.error]);
 
-  if (showSendEmailDialog) {
-    return (
-      <Dialog>
-        <h1>{state?.message}</h1>
-      </Dialog>
-    );
-  }
   return (
     <form
       action={formAction}

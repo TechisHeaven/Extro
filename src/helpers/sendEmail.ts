@@ -4,6 +4,7 @@ import { CreateError } from "./createError";
 import { HttpStatusCode } from "axios";
 import { HTTP_STATUS_CODES } from "@/constants/main.constants";
 import { ResultError } from "@/types/types/types.error";
+import { transporter } from "./nodeMailerTransporter";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface sendMagicURLEmailProps {
@@ -20,22 +21,31 @@ export async function sendMagicURLEmail({
     const url = `${
       process.env.NEXT_PUBLIC_URL
     }/api/auth?v=${magicVerifyToken}&email=${encodeURIComponent(email)}`;
-    const { data, error } = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
-      to: [email],
-      subject: "Welcome to Exto",
-      react: EmailTemplate({ firstName: name, magicURL: url }),
-    });
 
-    if (error) {
+    const mailOptions = {
+      from: {
+        name: process.env.NEXT_PUBLIC_EMAIL_NAME!,
+        address: process.env.NEXT_PUBLIC_EMAIL_USER!,
+      },
+      to: email,
+      subject: "Welcome to Exto",
+      text: "Login to your Extro Account",
+      html: `<div>
+            <h1>Welcome, ${name}!</h1>
+            <p>click here to login to extro 😉 ${url}</p>
+            </div>`,
+    };
+
+    const result = await transporter.sendMail(mailOptions);
+    if (!result) {
       CreateError(
         HTTP_STATUS_CODES.clientErrors.Forbidden.status,
-        error.message
+        "Failed to Send Email"
       );
-      return Response.json({ error }, { status: 500 });
+      return Response.json({ error: "Failed to Send Email" }, { status: 500 });
     }
 
-    return Response.json(data);
+    return Response.json(result);
   } catch (error: unknown) {
     return Response.json({ error }, { status: 500 });
   }
