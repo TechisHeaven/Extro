@@ -79,6 +79,11 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+html,
+body {
+  overscroll-behavior: none; /* Prevents the default overscroll behavior */
+}
+
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
