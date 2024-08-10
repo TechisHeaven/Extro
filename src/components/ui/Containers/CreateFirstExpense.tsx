@@ -5,6 +5,7 @@ import { Button } from "../button";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import AddExpense from "../Expense/AddExpense";
+import AddExpenseComponent from "../Expense/AddExpenseComponents";
 
 const SETTING_LINK = "/settings/me";
 
@@ -34,7 +35,9 @@ const CreateFirstExpense = () => {
             </div>
           </div>
         </HoverCardComponent>
-        <AddExpense />
+        <AddExpense>
+          <AddExpenseComponent />
+        </AddExpense>
       </div>
     </MainCard>
   );

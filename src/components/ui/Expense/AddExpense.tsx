@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { TouchEvent, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Coins, CreditCard, Plus, ScanQrCode } from "lucide-react";
 import { useWindowSize } from "@/hooks/windowSize";
@@ -16,15 +16,15 @@ export default function AddExpense({
   const isMobileWidth = size.width <= 600;
   const [buttonSize, setButtonSize] = useState(40); // Initial button size
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [startY, setStartY] = useState(null);
+  const [startY, setStartY] = useState<number | null>(null);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: any) => {
     if (!isDrawerOpen && window.scrollY === 0) {
       setStartY(e.touches[0].clientY);
     }
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: any) => {
     const touchY = e.touches[0].clientY;
     if (startY !== null && touchY > startY && !isDrawerOpen) {
       const dragDistance = touchY - startY;
