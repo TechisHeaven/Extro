@@ -21,7 +21,7 @@ export default function Layout({
   const isMobileView = size.width <= 600 ? true : false;
   //change
   return (
-    <div className="inline-flex w-full relative ">
+    <div className="inline-flex w-full relative">
       {isMobileView ? <BottomSideBar /> : <SidebarMain />}
 
       <div className="w-full">

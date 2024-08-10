@@ -33,7 +33,7 @@ export default function AddExpense({
         const newSize = Math.min(70, 40 + dragDistance / 5); // Increase button size
         setButtonSize(newSize);
 
-        if (dragDistance > 500) {
+        if (dragDistance > 300) {
           setIsDrawerOpen(true);
         }
       }
