@@ -1,13 +1,9 @@
-import { Button } from "@/components/ui/button";
 import SelectDropDown from "@/components/ui/SelectDropDown";
-import { ArrowUp, Plus, Wallet } from "lucide-react";
-import ExpenseCard from "./ExpenseCard";
-import AreaChartLinear from "@/components/ui/Charts/AreaChartLinear";
-import MainCard from "./MainCard";
 import React from "react";
 import AddExpense from "@/components/ui/Expense/AddExpense";
 import { cn } from "@/lib/utils";
 import MainCardContainer from "./MainCardContainer";
+import AddExpenseComponent from "@/components/ui/Expense/AddExpenseComponents";
 
 export default async function Home() {
   return (
@@ -21,7 +17,9 @@ export default async function Home() {
         </div>
         <div className="buttons inline-flex items-center gap-4">
           <SelectDropDown items={SelectItemsWeekdays} />
-          <AddExpense />
+          <AddExpense>
+            <AddExpenseComponent />
+          </AddExpense>
         </div>
       </div>
       <div className="mobileView  text-center flex sm:hidden flex-col gap-2 my-4">

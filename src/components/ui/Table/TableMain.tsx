@@ -160,12 +160,12 @@ const Table = ({ data, searchTerm }: TableProps) => {
                       )}
                     </td>
                   ))}
-                <div className="p-4 w-full inline-flex items-center justify-center">
+                <td className="p-4 w-full inline-flex items-center justify-center">
                   <Info
                     className="w-4 h-4"
                     onClick={() => handleSelectTransaction(row)}
                   />
-                </div>
+                </td>
               </tr>
             ))
           ) : (

@@ -21,8 +21,7 @@ interface LoginFormProps {
 
 const LoginForm = ({ searchParams }: LoginFormProps) => {
   const [state, formAction] = useFormState(loginAction, initialState);
-  const [showSendEmailDialog, setShowSendEmailDialog] =
-    useState<boolean>(false);
+
   useEffect(() => {
     if (state?.errors?.email) {
       const emailError = state?.errors?.email[0];
@@ -32,7 +31,6 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
       toast.error(state?.errors);
     }
     if (state?.status === 200) {
-      setShowSendEmailDialog(true);
       toast.success("Email sent successfully");
     }
   }, [state]);
