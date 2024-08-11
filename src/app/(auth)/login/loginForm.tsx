@@ -23,6 +23,7 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
   const [state, formAction] = useFormState(loginAction, initialState);
 
   useEffect(() => {
+    console.log(state);
     if (state?.errors?.email) {
       const emailError = state?.errors?.email[0];
       toast.error(emailError);

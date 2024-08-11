@@ -101,6 +101,7 @@ export async function loginAction(
     if (error instanceof ResultError) {
       CreateError(error.statusCode, error.message);
     }
+    CreateError(500, error as any);
     console.log(error);
   }
 }
@@ -130,13 +131,7 @@ export async function createUser(email: string) {
         ],
       },
       magicTokenExpires: {
-        rich_text: [
-          {
-            text: {
-              content: "",
-            },
-          },
-        ],
+        number: 0,
       },
     };
 
