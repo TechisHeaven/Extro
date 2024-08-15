@@ -1,8 +1,12 @@
-import { HASH_EXPIRE_TIME } from "@/constants/main.constants";
+import {
+  HASH_EXPIRE_TIME,
+  HTTP_STATUS_CODES,
+} from "@/constants/main.constants";
 import crypto from "node:crypto";
 import { CreateError } from "./createError";
 import { notion } from "@/config/notion.config";
 import { authDatabaseId } from "@/constants/database.constants";
+import { prisma } from "./client/prisma";
 
 export async function createHash(
   email: string,
@@ -24,36 +28,39 @@ export async function createHash(
 // Function to verify the hash
 export async function verifyHash(email: string, hash: string) {
   try {
-    const currentTimestamp = Date.now();
-    const expirationTimestamp = Date.now() + HASH_EXPIRE_TIME * 60 * 1000;
-    if (currentTimestamp > expirationTimestamp) {
-      CreateError(401, "Hash has expired");
-    }
-
-    const response = await notion.databases.query({
-      database_id: authDatabaseId,
-      filter: {
-        property: "email",
-        rich_text: {
-          equals: email,
-        },
+    // Fetch the user and their token information from the database
+    const user = await prisma.user.findUnique({
+      where: { email: email },
+      select: {
+        magicToken: true,
+        magicTokenExpires: true,
       },
     });
 
-    const userResponse = response.results[0] as any;
-    const computedHash =
-      userResponse?.properties.magicToken.rich_text[0].plain_text;
-    if (!computedHash) {
+    // Check if user or necessary fields are missing
+    if (!user || !user.magicToken || !user.magicTokenExpires) {
       CreateError(401, "Session not found");
-    }
+    } else {
+      // Check if the token has expired
+      const currentTimestamp = Date.now();
+      if (currentTimestamp > user.magicTokenExpires.getTime()) {
+        CreateError(401, "Hash has expired");
+      }
 
-    return hash === computedHash;
+      // Validate the hash
+      return {
+        status: HTTP_STATUS_CODES.success.OK.status,
+        result: hash === user.magicToken,
+        message: "User Verified",
+      };
+    }
   } catch (error: any) {
     // CreateError(error.status, error.message);
     console.log(error);
     if (error) {
       return {
         status: error.status,
+        result: false,
         message: error.message,
       };
     }

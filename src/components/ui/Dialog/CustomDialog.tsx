@@ -43,7 +43,10 @@ export function CustomDialog({
   return (
     <Dialog open={open} defaultOpen={open} onOpenChange={handleClose}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className={cn(" p-0", className)}>
+      <DialogContent
+        aria-description="Custom Dialog Description"
+        className={cn(" p-0", className)}
+      >
         {children}
       </DialogContent>
     </Dialog>

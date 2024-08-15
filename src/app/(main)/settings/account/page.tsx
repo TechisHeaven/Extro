@@ -1,3 +1,4 @@
+import { getUser } from "@/actions/auth/action";
 import { Button } from "@/components/ui/button";
 import { ChangePasswordDialog } from "@/components/ui/Dialog/ChangePasswordDialog";
 import { Input } from "@/components/ui/input";
@@ -8,12 +9,14 @@ import SelectDropDown, {
 import { Switch } from "@/components/ui/switch";
 import React from "react";
 
-export default function Account() {
+export default async function Account() {
+  const user = await getUser();
+
   return (
     <div className="flex flex-col gap-8 p-4">
       <div className="Email">
         <Label>Email</Label>
-        <Input placeholder="John@doe.com" />
+        <Input defaultValue={user?.email} placeholder="John@doe.com" />
       </div>
       <div className="Password flex flex-col gap-1 items-start">
         <Label>Password</Label>

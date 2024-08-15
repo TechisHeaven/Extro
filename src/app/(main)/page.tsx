@@ -1,16 +1,19 @@
 import SelectDropDown from "@/components/ui/SelectDropDown";
-import React from "react";
+import React, { Suspense } from "react";
 import AddExpense from "@/components/ui/Expense/AddExpense";
 import { cn } from "@/lib/utils";
 import MainCardContainer from "./MainCardContainer";
 import AddExpenseComponent from "@/components/ui/Expense/AddExpenseComponents";
+import Heading from "@/components/ui/Dashboard/Heading";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main className=" p-4 w-full max-w-[1400px] m-auto">
       <div className="heading inline-flex items-center justify-end sm:justify-between w-full">
         <div className="hidden sm:block">
-          <h3 className="text-2xl font-semibold">Welcome, Himanshu</h3>
+          <Suspense fallback={"loading heading"}>
+            <Heading />
+          </Suspense>
           <h6 className="text-xs text-secondaryColor">
             Track, Manage and Explore all Expenses.
           </h6>

@@ -1,4 +1,5 @@
 import { COOKIE_EXPIRE_TIME } from "@/constants/main.constants";
+import useUserStore from "@/store/user.store";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -47,10 +48,15 @@ export async function getSession() {
 
 export async function updateSession(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
-  if (!session) return;
+  if (!session) {
+    // If there is no session cookie, return the next response without modification
+    return NextResponse.next();
+  }
+
   // Refresh the session so it doesn't expire
   const parsed = await decrypt(session);
   parsed.expires = new Date(Date.now() + COOKIE_EXPIRE_TIME * 1000);
+
   const res = NextResponse.next();
   res.cookies.set({
     name: "session",

@@ -10,7 +10,7 @@ interface MainCardProps {
   badge?: string;
 }
 
-export default async function MainCard({
+export default function MainCard({
   title,
   children,
   className,

@@ -6,7 +6,7 @@ import CustomInput from "@/components/ui/Input/CustomInput";
 import { Label } from "@/components/ui/label";
 import { Mail } from "lucide-react";
 import Image from "next/image";
-import { LoginButton } from "./loginbutton";
+import { SubmitButton } from "./loginbutton";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
@@ -80,7 +80,7 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
             className="bg-white"
           />
         </div>
-        <LoginButton />
+        <SubmitButton />
       </form>
     </div>
   );
