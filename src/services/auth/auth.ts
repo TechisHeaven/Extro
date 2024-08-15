@@ -1,6 +1,8 @@
 import { prisma } from "@/helpers/client/prisma";
 import { CreateError } from "@/helpers/createError";
+import { decrypt } from "@/helpers/session/handleJWTsession";
 import { ResultError } from "@/types/types/types.error";
+import { cookies } from "next/headers";
 
 export class AuthService {
   async getUser(id: number) {

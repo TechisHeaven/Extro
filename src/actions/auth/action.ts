@@ -11,7 +11,7 @@ import { CreateError } from "@/helpers/createError";
 import { createHash } from "@/helpers/handleHash";
 import { ReturnResultProps } from "@/helpers/returnResult";
 import { sendMagicURLEmail } from "@/helpers/sendEmail";
-import { decrypt } from "@/helpers/session/handleJWTsession";
+import { getSession } from "@/helpers/session/handleJWTsession";
 import { AuthService } from "@/services/auth/auth";
 import { ResultError } from "@/types/types/types.error";
 import { UserInterface } from "@/types/types/types.user";
@@ -137,13 +137,6 @@ export async function createUser(email: string) {
     }
     console.log(error);
   }
-}
-export const dynamic = "force-dynamic";
-//get session by cookies
-export async function getSession() {
-  const session = cookies().get("session")?.value;
-  if (!session) return null;
-  return await decrypt(session);
 }
 
 //logout session
