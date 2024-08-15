@@ -138,7 +138,7 @@ export async function createUser(email: string) {
     console.log(error);
   }
 }
-
+export const dynamic = "force-dynamic";
 //get session by cookies
 export async function getSession() {
   const session = cookies().get("session")?.value;
