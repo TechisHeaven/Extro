@@ -1,4 +1,4 @@
-export const HASH_EXPIRE_TIME = 10; // in minutes
+export const HASH_EXPIRE_TIME = 60 * 24 * 30; // in minutes
 export const COOKIE_EXPIRE_TIME = 60 * 60; // in seconds
 
 interface HttpStatus {

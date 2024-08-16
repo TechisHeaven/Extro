@@ -96,7 +96,7 @@ const SettingsMeForm = ({
       <div className="Profile flex  gap-4 flex-col sm:flex-row items-center sm:items-end">
         <Image
           alt="profile-image"
-          src={"/profile-image.webp"}
+          src={stateContext?.user?.image || ""}
           width={100}
           height={100}
           className="rounded-full aspect-square object-cover"

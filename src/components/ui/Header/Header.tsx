@@ -1,15 +1,10 @@
 import { Inbox, Settings } from "lucide-react";
 import React from "react";
-import CustomAvatar from "../CustomAvatar";
 import CustomPopover from "../Popover/CustomPopover";
-import Image from "next/image";
-import TextCopyComponent from "../Table/TextCopyComponent";
-import Link from "next/link";
-import { Button } from "../button";
 import Notification from "./Notification";
 import { NotifcationType } from "@/types/types/types.main";
 import { ScrollArea } from "../scroll-area";
-import Logout from "./Logout";
+import ProfilePopOver from "./ProfilePopOver";
 
 const Header = () => {
   const NotificationData: NotifcationType[] = [
@@ -56,56 +51,7 @@ const Header = () => {
           })}
         </ScrollArea>
       </CustomPopover>
-      <CustomPopover
-        trigger={
-          <CustomAvatar
-            ImageUrl="https://github.com/shadcn.png"
-            alt="Test User"
-          />
-        }
-      >
-        <div>
-          <div className="heading-section-profile select-none inline-flex items-center justify-between">
-            <div className="info">
-              <h5 className="font-semibold">Himanshu</h5>
-              <p className="text-sm truncate max-w-52 w-fit ">
-                vermajihimanshu2004@gmail.com
-              </p>
-            </div>
-            <Image
-              className="object-cover rounded-full aspect-square"
-              src={"/profile-image.webp"}
-              alt="profile-image"
-              width={40}
-              height={40}
-            ></Image>
-          </div>
-          <div className="heading-section-profile select-none inline-flex items-center justify-between">
-            <div className="info">
-              <h5 className="font-semibold text-sm">Wallet Address</h5>
-              <TextCopyComponent text="0x80ad6ba2b620d2bb89bd35147e00278331e55922" />
-            </div>
-          </div>
-          <hr />
-          <div className="nav-items my-2 w-full flex flex-col gap-2">
-            <Link
-              href={"/settings/me"}
-              className="px-4 p-2 inline-flex w-full items-center gap-2 hover:bg-gray-200 transition-colors rounded-md"
-            >
-              <Settings className="w-4  h-4" />
-              User Profile
-            </Link>
-            <Link
-              href={"/settings/account"}
-              className="px-4 p-2 inline-flex w-full items-center gap-2 hover:bg-gray-200 transition-colors rounded-md"
-            >
-              <Settings className="w-4  h-4" />
-              Help Center
-            </Link>
-            <Logout />
-          </div>
-        </div>
-      </CustomPopover>
+      <ProfilePopOver />
     </div>
   );
 };

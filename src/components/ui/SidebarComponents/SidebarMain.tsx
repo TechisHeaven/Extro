@@ -11,12 +11,17 @@ import CustomToolTip from "@/components/ui//CustomToolTip/CustomToolTip";
 import { logout } from "@/actions/auth/action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { useUserContext } from "@/providers/user.provider";
 
 const SidebarMain = () => {
   //handle Logout User
   const router = useRouter();
+  const state = useUserContext();
   async function handleLogout() {
     await logout();
+    state?.setUser(null);
+    await signOut();
     router.push("/login");
     toast.success("Logout Successfully!");
   }

@@ -1,8 +1,9 @@
 export interface UserInterface {
-  id: string | number;
+  id?: string | number;
   name: string | null;
-  about_me: string | null;
+  about_me?: string | null;
   email?: string;
+  image?: string;
 }
 
 export interface ReturnUserResult {

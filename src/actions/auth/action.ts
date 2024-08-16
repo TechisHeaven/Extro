@@ -1,8 +1,7 @@
 "use server";
 import { authSchema } from "./../../schemas/zod/auth/schema";
-import { notion } from "@/config/notion.config";
-import { authDatabaseId } from "@/constants/database.constants";
 import {
+  COOKIE_EXPIRE_TIME,
   HASH_EXPIRE_TIME,
   HTTP_STATUS_CODES,
 } from "@/constants/main.constants";
@@ -11,11 +10,15 @@ import { CreateError } from "@/helpers/createError";
 import { createHash } from "@/helpers/handleHash";
 import { ReturnResultProps } from "@/helpers/returnResult";
 import { sendMagicURLEmail } from "@/helpers/sendEmail";
+import { createCookieSession } from "@/helpers/session/handleCookies";
 import { getSession } from "@/helpers/session/handleJWTsession";
 import { AuthService } from "@/services/auth/auth";
 import { ResultError } from "@/types/types/types.error";
 import { UserInterface } from "@/types/types/types.user";
+import { getServerSession } from "next-auth";
+import { signIn } from "next-auth/react";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import type { ZodIssue } from "zod";
 
 const Auth = new AuthService();
@@ -87,6 +90,14 @@ export async function loginAction(
     CreateError(500, error as any);
     console.log(error);
   }
+}
+export async function loginGoogleAction(data: UserInterface) {
+  try {
+    const sessionToken = await createCookieSession(COOKIE_EXPIRE_TIME, data);
+  } catch (error) {
+    console.log(error);
+  }
+  redirect("/");
 }
 
 export async function createUser(email: string) {
@@ -196,8 +207,8 @@ export async function updateUser(
 }
 
 export async function getUser() {
+  const session = await getSession();
   try {
-    const session = await getSession();
     if (!session) {
       CreateError(
         HTTP_STATUS_CODES.clientErrors.NotFound.status,

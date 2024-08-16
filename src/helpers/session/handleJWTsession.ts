@@ -1,5 +1,4 @@
 import { COOKIE_EXPIRE_TIME } from "@/constants/main.constants";
-import useUserStore from "@/store/user.store";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -48,21 +47,43 @@ export async function getSession() {
 
 export async function updateSession(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
-  if (!session) {
+  const googleSession = request.cookies.get("session")?.value;
+  if (!session || !googleSession) {
     // If there is no session cookie, return the next response without modification
     return NextResponse.next();
   }
 
-  // Refresh the session so it doesn't expire
-  const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + COOKIE_EXPIRE_TIME * 1000);
+  try {
+    // Refresh the session so it doesn't expire
+    const parsed = await decrypt(session);
 
-  const res = NextResponse.next();
-  res.cookies.set({
-    name: "session",
-    value: await encrypt(parsed),
-    httpOnly: true,
-    expires: parsed.expires,
-  });
-  return res;
+    if (parsed.expires < new Date()) {
+      // If the session has expired, redirect to the login page
+      const res = NextResponse.redirect(new URL("/login", request.url));
+      res.cookies.set("session", "", { expires: new Date(0) }); // Clear the expired session cookie
+      return res;
+    }
+
+    // Refresh the session to extend expiration time
+    const newExpires = new Date(Date.now() + COOKIE_EXPIRE_TIME * 1000);
+    const updatedSession = await encrypt({
+      user: parsed.user,
+      expires: newExpires,
+    });
+
+    const res = NextResponse.next();
+    res.cookies.set({
+      name: "session",
+      value: updatedSession,
+      httpOnly: true,
+      expires: newExpires,
+    });
+    return res;
+  } catch (error) {
+    console.error("JWT validation error:", error);
+    // Handle token verification failure (e.g., redirect to login)
+    const res = NextResponse.redirect(new URL("/login", request.url));
+    res.cookies.set("session", "", { expires: new Date(0) }); // Clear the session cookie
+    return res;
+  }
 }

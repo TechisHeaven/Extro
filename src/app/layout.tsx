@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import ReactQueryClientProvider from "@/providers/reactQueryProvider";
 import { UserStoreProvider } from "@/providers/user.provider";
+import NextAuthProvider from "@/providers/nextAuth.provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -31,10 +32,12 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ReactQueryClientProvider>
-          <UserStoreProvider>{children}</UserStoreProvider>
-        </ReactQueryClientProvider>
-        <Toaster position="top-center" />
+        <NextAuthProvider>
+          <ReactQueryClientProvider>
+            <UserStoreProvider>{children}</UserStoreProvider>
+          </ReactQueryClientProvider>
+          <Toaster position="top-center" />
+        </NextAuthProvider>
       </body>
     </html>
   );
