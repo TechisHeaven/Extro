@@ -72,9 +72,17 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
     updateUser();
   }, [data]);
 
+  function handleForm(form: FormData) {
+    const email = form.get("email");
+    if (!email) {
+      toast.error("Please Enter Email");
+      return;
+    }
+    formAction(form);
+  }
+
   return (
     <div className="border max-w-[420px] w-full border-white p-8 rounded-2xl bg-gradient-to-b via-white via-30% from-10% from-indigo-50  shadow-md flex flex-col gap-4">
-      {status === "loading" && "Loading.............."}
       <div className="text-center">
         <h1 className="font-semibold">Extro</h1>
         <h1 className="text-2xl font-semibold">Welcome Back</h1>
@@ -82,7 +90,7 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
       </div>
       <div className="social-login grid-cols-3 inline-flex items-center ">
         <Button
-          disabled={status === "loading" || data !== undefined}
+          disabled={status === "loading" || data !== null}
           onClick={handleGoogleAuth}
           className="bg-white w-full p-1 aspect-square  border shadow-sm hover:bg-white hover:shadow-md transition-shadow "
         >
@@ -101,7 +109,7 @@ const LoginForm = ({ searchParams }: LoginFormProps) => {
         </Button>
       </div>
       <p className="text-center text-xs text-secondaryColor capitalize">or</p>
-      <form action={formAction} className="flex flex-col gap-2">
+      <form action={handleForm} className="flex flex-col gap-2">
         <div className="email">
           <Label>Email</Label>
           <CustomInput
