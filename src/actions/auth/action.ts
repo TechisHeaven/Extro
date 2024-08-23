@@ -216,8 +216,24 @@ export async function getUser() {
       );
       return;
     }
-    const id = session.payload.id;
-    const user = await Auth.getUser(id);
+    const userSession = session.payload.email;
+    const result = await prisma.user.findUnique({
+      where: {
+        email: userSession?.email,
+      },
+      select: {
+        id: true,
+      },
+    });
+    const userId = result?.id;
+
+    if (!userId) {
+      CreateError(
+        HTTP_STATUS_CODES.clientErrors.NotFound.status,
+        "Session not found"
+      );
+    }
+    const user = await Auth.getUser(userId!);
 
     return user;
   } catch (error) {

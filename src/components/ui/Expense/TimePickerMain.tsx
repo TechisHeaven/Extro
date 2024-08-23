@@ -16,7 +16,11 @@ import { TimePickerInput } from "./TimePickerInput";
 import { TimePeriodSelect } from "./TimePickerSelect";
 import { Period } from "@/lib/time-picker-utils";
 
-export function DateTimePicker() {
+export function DateTimePicker<T>({
+  setValue,
+}: {
+  setValue: (name: "expenseTime", value: any) => void;
+}) {
   const [date, setDate] = React.useState<Date>();
 
   /**
@@ -33,6 +37,7 @@ export function DateTimePicker() {
     const diffInDays = diff / (1000 * 60 * 60 * 24);
     const newDateFull = add(date, { days: Math.ceil(diffInDays) });
     setDate(newDateFull);
+    setValue("expenseTime", newDateFull);
   };
 
   return (

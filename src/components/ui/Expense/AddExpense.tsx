@@ -1,11 +1,10 @@
 "use client";
-import React, { TouchEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Coins, CreditCard, Plus, ScanQrCode } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useWindowSize } from "@/hooks/windowSize";
 import { DrawerComponent } from "../Drawer/Drawer";
 import SheetComponent from "../Sheet/Sheet";
-import AddExpenseComponent from "./AddExpenseComponents";
 
 export default function AddExpense({
   children,

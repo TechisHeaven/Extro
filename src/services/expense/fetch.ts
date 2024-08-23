@@ -11,7 +11,7 @@ export async function fetchAll(): Promise<any> {
     });
 
     const result = await response.json();
-    return result.data;
+    return result.data.result;
   } catch (error: any) {
     if (error.cause instanceof AggregateError) {
       console.error(error.cause.errors);
@@ -20,19 +20,5 @@ export async function fetchAll(): Promise<any> {
     } else {
       console.log("error", error);
     }
-  }
-}
-
-export async function fetchDummy() {
-  try {
-    const response = await axios.get("https://dummyjson.com/products/1", {
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.log(error);
   }
 }

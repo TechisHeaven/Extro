@@ -1,3 +1,4 @@
+import { getExpenses } from "@/actions/expense/action";
 import MainTable from "@/components/ui/Table/MainTable";
 import React from "react";
 

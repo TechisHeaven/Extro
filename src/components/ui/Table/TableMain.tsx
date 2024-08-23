@@ -26,21 +26,21 @@ const Table = ({ data, searchTerm }: TableProps) => {
     key: keyof Transaction;
     direction: Direction;
   }>({
-    key: "name",
+    key: "title",
     direction: "asc",
   });
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction>({
-    amount: 0,
-    name: "",
-    timestamp: 0,
+    price: 0,
+    title: "",
+    expenseTime: 0,
     category: "groceries",
   });
   const itemsPerPage = 10;
 
   const debouncedSearchTerm = Debouncer(searchTerm, 500);
-
+  console.log(filteredData);
   //debouncer configued SearchTerm
   useEffect(() => {
     let tempData = data;
@@ -140,7 +140,7 @@ const Table = ({ data, searchTerm }: TableProps) => {
                       key={key}
                       className={cn("p-4 text-left w-fit table-cell")}
                     >
-                      {key === "name" &&
+                      {key === "title" &&
                       row.category &&
                       categoryImages[row.category] ? (
                         <div className="inline-flex items-center gap-2">
@@ -153,7 +153,7 @@ const Table = ({ data, searchTerm }: TableProps) => {
                           />
                           {row[key]}
                         </div>
-                      ) : key === "amount" ? (
+                      ) : key === "price" ? (
                         `$${row[key]}`
                       ) : (
                         row[key]

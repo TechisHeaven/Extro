@@ -5,8 +5,11 @@ import { cn } from "@/lib/utils";
 import MainCardContainer from "./MainCardContainer";
 import AddExpenseComponent from "@/components/ui/Expense/AddExpenseComponents";
 import Heading from "@/components/ui/Dashboard/Heading";
+import { getExpenses } from "@/actions/expense/action";
+import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className=" p-4 w-full max-w-[1400px] m-auto">
       <div className="heading inline-flex items-center justify-end sm:justify-between w-full">

@@ -1,9 +1,10 @@
 export type Transaction = {
   id?: string;
-  amount: number;
+  price: number | string;
   status?: "pending" | "processing" | "success" | "failed";
-  name: string;
-  timestamp: number | string;
+  title: string;
+  expenseTime: number | string;
+  createdAt?: number | string;
   category: CategoryTypes;
 };
 
@@ -15,4 +16,25 @@ export interface NotifcationType {
   timestamp: number;
   img?: string;
   text?: string;
+}
+
+export type TableDataResultProps = {
+  id: number;
+  title: string;
+  price: number;
+  category: Category;
+  type: Type;
+  images: string[];
+  expenseTime: string;
+  createdAt: string;
+  userId: number;
+};
+
+enum Category {
+  GROCERIES,
+  SNACKS,
+}
+enum Type {
+  CASH,
+  CARD,
 }

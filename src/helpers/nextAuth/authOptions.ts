@@ -125,15 +125,12 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log("fire signin Callback");
       return true;
     },
     async redirect({ url, baseUrl }) {
-      console.log("fire redirect Callback");
       return baseUrl;
     },
     async session({ session, user, token }) {
-      console.log("fire SESSION Callback");
       return {
         ...session,
         user: {
@@ -144,7 +141,6 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      console.log("fire jwt Callback");
       if (user) {
         const u = user as unknown as any;
         return {

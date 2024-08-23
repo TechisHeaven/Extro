@@ -23,16 +23,12 @@ export default function MainTable() {
     setSearchValue(event.target.value);
   }
 
-  // React.useEffect(() => {
-  //   table.getColumn("name")?.setFilterValue(debouncedValue);
-  // }, [debouncedValue, table]);
-
   const TestTableData: Transaction[] =
     data?.map((data) => ({
       category: data.category,
-      name: data.name,
-      amount: data.amount,
-      timestamp: formatTimeStamps(Number(data.timestamp), true),
+      title: data.title,
+      price: `₹${data.price}`,
+      expenseTime: formatTimeStamps(data.expenseTime, true),
     })) || [];
 
   return (

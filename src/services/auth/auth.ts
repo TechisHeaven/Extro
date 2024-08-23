@@ -1,12 +1,13 @@
 import { prisma } from "@/helpers/client/prisma";
 import { CreateError } from "@/helpers/createError";
-import { decrypt } from "@/helpers/session/handleJWTsession";
 import { ResultError } from "@/types/types/types.error";
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
 
 export class AuthService {
   async getUser(id: number) {
+    const user = await getServerSession();
     try {
+      console.log({ id });
       const user = await prisma.user.findUnique({
         where: {
           id: id,
@@ -26,7 +27,7 @@ export class AuthService {
       if (error instanceof ResultError) {
         CreateError(error.statusCode, error.message);
       }
-      console.log(error);
+      console.log({ error });
     }
   }
 }

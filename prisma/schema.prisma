@@ -26,6 +26,7 @@ model User {
   updated_at        DateTime  @updatedAt
   accounts          Account[] // Relation to Account model
   sessions          Session[] // Relation to Session model
+  Expense           Expense?
 }
 
 model Account {
@@ -60,4 +61,27 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Expense {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  price       Float
+  category    Category
+  type        Type
+  images      String[]
+  expenseTime DateTime @default(now())
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int      @unique
+}
+
+enum Category {
+  SNACKS
+  GROCERIES
+}
+
+enum Type {
+  CASH
+  CARD
 }

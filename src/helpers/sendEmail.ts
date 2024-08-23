@@ -1,11 +1,7 @@
-import { EmailTemplate } from "@/template/email/email-template";
 import { Resend } from "resend";
 import { CreateError } from "./createError";
-import { HttpStatusCode } from "axios";
 import { HTTP_STATUS_CODES } from "@/constants/main.constants";
-import { ResultError } from "@/types/types/types.error";
 import { transporter } from "./nodeMailerTransporter";
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface sendMagicURLEmailProps {
   name: string;

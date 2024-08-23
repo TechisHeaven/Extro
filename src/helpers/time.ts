@@ -1,6 +1,6 @@
 //Timestamp to date Conversion Function
 export function formatTimeStamps(
-  timestamp: number,
+  timestamp: string | number,
   complete?: boolean
 ): string {
   const date = new Date(timestamp);

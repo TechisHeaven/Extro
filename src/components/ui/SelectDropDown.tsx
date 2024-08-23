@@ -1,4 +1,5 @@
-import React, { HTMLProps } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -10,9 +11,11 @@ import {
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-interface DropDownProps {
+interface DropDownProps<T> {
   items: DropDownItemProps[];
-  className?: HTMLProps<HTMLElement>["className"];
+  setValue?: (name: T, value: any) => void;
+  name?: T;
+  className?: string;
 }
 
 export interface DropDownItemProps {
@@ -23,9 +26,32 @@ export interface DropDownItemProps {
   placeholder?: string;
 }
 
-const SelectDropDown = ({ items, className }: DropDownProps) => {
+const SelectDropDown = <T extends string>({
+  items,
+  className,
+  setValue,
+  name,
+}: DropDownProps<T>) => {
+  const [selectedValue, setSelectedValue] = useState(items[0]?.title || "");
+
+  const handleSelectChange = (value: string) => {
+    setSelectedValue(value);
+    if (setValue && name) {
+      setValue(name, value);
+    }
+  };
+
+  useEffect(() => {
+    if (!selectedValue && items.length > 0) {
+      setSelectedValue(items[0]?.title);
+      if (setValue && name) {
+        setValue(name, items[0].title);
+      }
+    }
+  }, [items, selectedValue, setValue, name]);
+
   return (
-    <Select>
+    <Select onValueChange={handleSelectChange} value={selectedValue}>
       <SelectTrigger className={cn("w-full", className)}>
         <SelectValue
           className="font-semibold"
@@ -48,25 +74,23 @@ const SelectDropDown = ({ items, className }: DropDownProps) => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup className="font-semibold">
-          {items?.map((item, index) => {
-            return (
-              <SelectItem key={index} value={item.title}>
-                <h4 className="inline-flex items-center gap-2">
-                  {item.icon && !item.image ? item.icon : null}
-                  {item.image && !item.icon ? (
-                    <Image
-                      loading="eager"
-                      alt="icon-image"
-                      src={item.image}
-                      width={20}
-                      height={20}
-                    />
-                  ) : null}
-                  {item.title}
-                </h4>
-              </SelectItem>
-            );
-          })}
+          {items?.map((item, index) => (
+            <SelectItem key={index} value={item.title}>
+              <h4 className="inline-flex items-center gap-2">
+                {item.icon && !item.image ? item.icon : null}
+                {item.image && !item.icon ? (
+                  <Image
+                    loading="eager"
+                    alt="icon-image"
+                    src={item.image}
+                    width={20}
+                    height={20}
+                  />
+                ) : null}
+                {item.title}
+              </h4>
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

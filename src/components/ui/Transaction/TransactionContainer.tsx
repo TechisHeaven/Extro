@@ -15,11 +15,11 @@ const categoryImages = {
 };
 
 const TransactionContainer = ({ transaction }: TransactionContainerProps) => {
-  const time = transaction.timestamp;
-  const amount = transaction.amount;
+  const time = transaction.expenseTime;
+  const amount = transaction.price;
   const category = transaction.category;
   const categoryImage = categoryImages[transaction.category];
-  const name = transaction.name;
+  const name = transaction.title;
 
   return (
     <div className="container p-8">
