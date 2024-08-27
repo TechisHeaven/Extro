@@ -1,5 +1,4 @@
 import { getExpenses } from "@/actions/expense/action";
-import { Transaction } from "@/types/types/types.main";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic"; // defaults to auto
