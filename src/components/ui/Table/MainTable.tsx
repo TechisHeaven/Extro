@@ -8,7 +8,7 @@ import { fetchAll } from "@/services/expense/fetch";
 import { formatTimeStamps } from "@/helpers/time";
 import Table from "./TableMain";
 import SpinnerLoader from "../loader";
-import { Transaction } from "@/types/types/types.main";
+import { TableDataResultProps, Transaction } from "@/types/types/types.main";
 
 export default function MainTable() {
   const { isPending, error, data } = useQuery<Transaction[], Error>({

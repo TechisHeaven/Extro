@@ -1,3 +1,15 @@
+export type Transaction = {
+  id?: string;
+  price: number | string;
+  status?: "pending" | "processing" | "success" | "failed";
+  title: string;
+  expenseTime: number | string;
+  createdAt?: number | string;
+  category: CategoryTypes;
+};
+
+type CategoryTypes = "snacks" | "groceries";
+
 export interface NotifcationType {
   id: number | string;
   title: string;
@@ -7,15 +19,15 @@ export interface NotifcationType {
 }
 
 export type TableDataResultProps = {
-  id: number;
+  id?: number;
   title: string;
-  price: number;
+  price: number | string;
   category: Category;
-  type: Type;
-  images: string[];
+  type?: Type;
+  images?: string[];
   expenseTime: string;
-  createdAt: string;
-  userId: number;
+  createdAt?: string;
+  userId?: number;
 };
 
 enum Category {

@@ -11,9 +11,9 @@ import {
   DropdownMenuSeparator,
 } from "../dropdown-menu";
 import { formatTimeStamps } from "@/helpers/time";
-import { Transaction } from "@/types/types/types.main";
+import { TableDataResultProps } from "@/types/types/types.main";
 
-export const columns: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<TableDataResultProps>[] = [
   {
     id: "select",
     header: ({ table }) => (
