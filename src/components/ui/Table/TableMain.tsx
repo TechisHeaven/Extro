@@ -40,7 +40,6 @@ const Table = ({ data, searchTerm }: TableProps) => {
   const itemsPerPage = 10;
 
   const debouncedSearchTerm = Debouncer(searchTerm, 500);
-  console.log(filteredData);
   //debouncer configued SearchTerm
   useEffect(() => {
     let tempData = data;
@@ -154,7 +153,7 @@ const Table = ({ data, searchTerm }: TableProps) => {
                           {row[key]}
                         </div>
                       ) : key === "price" ? (
-                        `$${row[key]}`
+                        `${row[key]}`
                       ) : (
                         row[key]
                       )}

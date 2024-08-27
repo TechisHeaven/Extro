@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const TypeEnum = z.enum(["CARD", "CASH"]);
 const CategoryEnum = z.enum(["GROCERIES", "SNACKS"]);
@@ -38,6 +39,7 @@ const AddExpenseComponent = () => {
   const { data } = useSession();
   const user: userSessionType | undefined | any = data?.user;
   const [, startTransition] = useTransition();
+  const queryClient = useQueryClient();
 
   const {
     handleSubmit,
@@ -61,6 +63,9 @@ const AddExpenseComponent = () => {
       const response = await createExpense(data, userId);
       if (response?.status === 201) {
         toast.success(response.message);
+        queryClient.invalidateQueries({
+          queryKey: ["fetchAll"],
+        });
         reset();
         return;
       }

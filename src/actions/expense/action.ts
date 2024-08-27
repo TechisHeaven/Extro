@@ -2,6 +2,7 @@
 
 import { ExpenseType } from "@/components/ui/Expense/AddExpenseComponents";
 import { prisma } from "@/helpers/client/prisma";
+import { User } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { revalidatePath } from "next/cache";
@@ -56,7 +57,6 @@ export async function createExpense(form: ExpenseType, userId: number) {
     }
 
     const price = Number(form.price);
-
     await prisma.expense.create({
       data: {
         title: form.title,
@@ -69,7 +69,8 @@ export async function createExpense(form: ExpenseType, userId: number) {
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/", "page");
+    revalidatePath("/", "layout");
     return {
       error: false,
       message: "Expense Created Successfully",

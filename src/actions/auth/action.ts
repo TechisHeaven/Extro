@@ -219,7 +219,7 @@ export async function getUser() {
     const userSession = session.payload.email;
     const result = await prisma.user.findUnique({
       where: {
-        email: userSession?.email,
+        email: userSession,
       },
       select: {
         id: true,
