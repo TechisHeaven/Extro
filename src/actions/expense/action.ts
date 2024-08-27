@@ -2,12 +2,18 @@
 
 import { ExpenseType } from "@/components/ui/Expense/AddExpenseComponents";
 import { prisma } from "@/helpers/client/prisma";
+import { TableDataResultProps } from "@/types/types/types.main";
 import { User } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { revalidatePath } from "next/cache";
 
-export async function getExpenses() {
+export async function getExpenses(): Promise<{
+  result?: TableDataResultProps[] | any;
+  error: boolean;
+  message: string;
+  status: number;
+}> {
   try {
     const userSession = await getServerSession();
     if (!userSession) {

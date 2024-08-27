@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 interface MainCardProps {
-  title: string;
+  title?: string;
   description?: string;
   className?: React.ComponentProps<"div">["className"];
   children: React.ReactNode;

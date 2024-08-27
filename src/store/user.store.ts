@@ -4,6 +4,8 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface UserState {
   user: UserInterface | null;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
   setUser: (user: UserInterface | null) => void;
   updateUser: (updates: Partial<UserInterface>) => void;
   getUser: () => UserInterface | null;
@@ -14,6 +16,8 @@ const useUserStore = create(
   persist(
     (set) => ({
       user: null,
+      loading: true,
+      setLoading: (loading: boolean) => set({ loading }),
       setUser: (user: UserInterface) => set({ user }),
       updateUser: (updates: UserInterface) =>
         set((state: UserState) => ({

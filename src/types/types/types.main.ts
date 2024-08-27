@@ -1,15 +1,3 @@
-export type Transaction = {
-  id?: string;
-  price: number | string;
-  status?: "pending" | "processing" | "success" | "failed";
-  title: string;
-  expenseTime: number | string;
-  createdAt?: number | string;
-  category: CategoryTypes;
-};
-
-type CategoryTypes = "snacks" | "groceries";
-
 export interface NotifcationType {
   id: number | string;
   title: string;

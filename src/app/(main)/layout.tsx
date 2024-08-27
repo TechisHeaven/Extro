@@ -5,6 +5,7 @@ import Header from "@/components/ui/Header/Header";
 import SidebarMain from "@/components/ui/SidebarComponents/SidebarMain";
 import { useWindowSize } from "@/hooks/windowSize";
 import BottomSideBar from "@/components/ui/SidebarComponents/BottomSideBar";
+import { ExpenseStoreProvider } from "@/providers/expense.provider";
 interface LayoutProps {
   children: React.ReactNode;
   table: React.ReactNode;
@@ -26,7 +27,7 @@ export default function Layout({
 
       <div className="w-full">
         <Header />
-        {children}
+        <ExpenseStoreProvider>{children}</ExpenseStoreProvider>
         {isHomePage && table}
         {settingDialog}
       </div>

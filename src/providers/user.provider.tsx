@@ -10,16 +10,19 @@ const UserContext = createContext<UserState | undefined>(undefined);
 export function UserStoreProvider({ children }: { children: React.ReactNode }) {
   const user = useUserStore() as UserState;
 
-  const { setUser } = user;
+  const { setUser, setLoading } = user;
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setLoading(true);
         const user = await getUser();
         if (user) {
           setUser(user);
+          setLoading(false);
         }
       } catch (error) {
+        setLoading(false);
         console.error("Failed to fetch user", error);
       }
     };
