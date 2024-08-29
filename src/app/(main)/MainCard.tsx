@@ -29,7 +29,7 @@ export default function MainCard({
 
       <h1 className="text-xl font-semibold">{title}</h1>
       <h1 className="text-xs text-secondaryColor">{description}</h1>
-      <div className={cn(className, "h-full")}>{children}</div>
+      <div className={cn(className, "h-full w-full")}>{children}</div>
     </div>
   );
 }

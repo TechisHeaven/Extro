@@ -7,6 +7,7 @@ import { User } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { revalidatePath } from "next/cache";
+import { fromJSON } from "postcss";
 
 export async function getExpenses(): Promise<{
   result?: TableDataResultProps[] | any;
@@ -74,6 +75,29 @@ export async function createExpense(form: ExpenseType, userId: number) {
         expenseTime: form?.expenseTime?.toISOString(),
       },
     });
+
+    const expenses = await prisma.currentExpenses.findUnique({
+      where: { userId: userId },
+    });
+
+    await prisma.currentExpenses.upsert({
+      create: {
+        monthExpense: price,
+        weekExpense: price,
+        yearExpense: price,
+        userId: userId,
+      },
+      update: {
+        monthExpense: expenses?.monthExpense || 0 + price,
+        weekExpense: expenses?.monthExpense || 0 + price,
+        yearExpense: expenses?.monthExpense || 0 + price,
+      },
+      where: {
+        userId: userId,
+      },
+    });
+
+    console.log(expenses);
 
     revalidatePath("/", "page");
     revalidatePath("/", "layout");

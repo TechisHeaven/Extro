@@ -27,6 +27,9 @@ model User {
   accounts          Account[] // Relation to Account model
   sessions          Session[] // Relation to Session model
   Expense           Expense[]
+
+  CurrentExpenses        CurrentExpenses[]
+  MonthlyExpenseAnalysis MonthlyExpenseAnalysis[]
 }
 
 model Account {
@@ -84,4 +87,26 @@ enum Category {
 enum Type {
   CASH
   CARD
+}
+
+model CurrentExpenses {
+  userId       Int    @id
+  weekExpense  Float?
+  monthExpense Float?
+  yearExpense  Float?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("current_expenses")
+}
+
+model MonthlyExpenseAnalysis {
+  userId       Int
+  month        DateTime
+  totalExpense Float?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@id([userId, month]) // Composite primary key
+  @@map("monthly_expense_analysis")
 }

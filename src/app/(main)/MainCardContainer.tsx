@@ -18,7 +18,9 @@ const MainCardContainer = () => {
   const expesesState = useExpenseContext();
   const expenses = expesesState?.expenses;
   const expensesLoading = expesesState?.loading;
+
   const expensesExists = expenses && expenses.length > 0;
+
   return (
     <>
       {userLoading ? (

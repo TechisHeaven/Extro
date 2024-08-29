@@ -25,7 +25,7 @@ const useExpenseStore = create(
           expense: { ...state.expenses, ...updates },
         })),
       getExpenses: () => set((state: ExpenseState) => state.expenses),
-      clearExpenses: () => set({ expense: null }),
+      clearExpenses: () => set({ expenses: null }),
     }),
     {
       name: "expense-storage",
