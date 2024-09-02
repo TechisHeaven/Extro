@@ -80,7 +80,7 @@ export async function createExpense(form: ExpenseType, userId: number) {
       where: { userId: userId },
     });
 
-    await prisma.currentExpenses.upsert({
+    const updatedCurrentExpenses = await prisma.currentExpenses.upsert({
       create: {
         monthExpense: price,
         weekExpense: price,
@@ -88,16 +88,14 @@ export async function createExpense(form: ExpenseType, userId: number) {
         userId: userId,
       },
       update: {
-        monthExpense: expenses?.monthExpense || 0 + price,
-        weekExpense: expenses?.monthExpense || 0 + price,
-        yearExpense: expenses?.monthExpense || 0 + price,
+        monthExpense: expenses?.monthExpense! + price || 0 + price,
+        weekExpense: expenses?.monthExpense! + price || 0 + price,
+        yearExpense: expenses?.monthExpense! + price || 0 + price,
       },
       where: {
         userId: userId,
       },
     });
-
-    console.log(expenses);
 
     revalidatePath("/", "page");
     revalidatePath("/", "layout");

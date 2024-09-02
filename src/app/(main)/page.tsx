@@ -5,9 +5,6 @@ import { cn } from "@/lib/utils";
 import MainCardContainer from "./MainCardContainer";
 import AddExpenseComponent from "@/components/ui/Expense/AddExpenseComponents";
 import Heading from "@/components/ui/Dashboard/Heading";
-import { getExpenses } from "@/actions/expense/action";
-import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
 
 export default async function Home() {
   return (

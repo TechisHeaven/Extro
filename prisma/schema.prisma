@@ -28,7 +28,7 @@ model User {
   sessions          Session[] // Relation to Session model
   Expense           Expense[]
 
-  CurrentExpenses        CurrentExpenses[]
+  CurrentExpenses        CurrentExpenses?
   MonthlyExpenseAnalysis MonthlyExpenseAnalysis[]
 }
 
@@ -95,7 +95,7 @@ model CurrentExpenses {
   monthExpense Float?
   yearExpense  Float?
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("current_expenses")
 }
@@ -105,7 +105,7 @@ model MonthlyExpenseAnalysis {
   month        DateTime
   totalExpense Float?
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, month]) // Composite primary key
   @@map("monthly_expense_analysis")

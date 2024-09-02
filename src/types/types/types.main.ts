@@ -30,6 +30,13 @@ export type TableDataResultProps = {
   userId?: number;
 };
 
+type CurrentExpense = {
+  userId: number;
+  monthExpense: number;
+  weekExpense: number;
+  yearExpense: number;
+};
+
 enum Category {
   GROCERIES,
   SNACKS,

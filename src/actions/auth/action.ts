@@ -240,6 +240,5 @@ export async function getUser() {
     if (error instanceof ResultError) {
       CreateError(error.statusCode, error.message);
     }
-    console.log(error);
   }
 }

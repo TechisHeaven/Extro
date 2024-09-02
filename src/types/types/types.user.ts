@@ -1,9 +1,12 @@
+import { CurrentExpenses } from "@prisma/client";
+
 export interface UserInterface {
   id?: string | number;
   name: string | null;
   about_me?: string | null;
   email?: string;
-  image?: string;
+  image?: string | null;
+  CurrentExpenses?: CurrentExpenses | null;
 }
 
 export interface ReturnUserResult {

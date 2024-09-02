@@ -66,6 +66,9 @@ const AddExpenseComponent = () => {
         queryClient.invalidateQueries({
           queryKey: ["fetchAll"],
         });
+        queryClient.invalidateQueries({
+          queryKey: ["fetchCurrentExpense"],
+        });
         reset();
         return;
       }

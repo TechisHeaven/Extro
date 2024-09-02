@@ -7,7 +7,6 @@ export class AuthService {
   async getUser(id: number) {
     const user = await getServerSession();
     try {
-      console.log({ id });
       const user = await prisma.user.findUnique({
         where: {
           id: id,
@@ -19,6 +18,8 @@ export class AuthService {
           about_me: true,
           created_at: true,
           updated_at: true,
+          CurrentExpenses: true,
+          image: true,
         },
       });
 

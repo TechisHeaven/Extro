@@ -10,16 +10,25 @@ import ConnectWalletContainer from "@/components/ui/Containers/ConnectWalletCont
 import { useUserContext } from "@/providers/user.provider";
 import { useExpenseContext } from "@/providers/expense.provider";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CurrentExpenses } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import { getCurrentExpense } from "@/services/auth/user.service";
 
 const MainCardContainer = () => {
   const state = useUserContext();
   const username = state?.user?.name;
+  const userId = state?.user?.id;
   const userLoading = state?.loading;
   const expesesState = useExpenseContext();
+  const CurrentExpense = state?.user?.CurrentExpenses!;
   const expenses = expesesState?.expenses;
   const expensesLoading = expesesState?.loading;
-
   const expensesExists = expenses && expenses.length > 0;
+
+  const { isPending, error, data } = useQuery<any, Error>({
+    queryKey: ["fetchCurrentExpense"],
+    queryFn: getCurrentExpense,
+  });
 
   return (
     <>
@@ -29,7 +38,7 @@ const MainCardContainer = () => {
         <SetUpProfile />
       ) : (
         <MainCard title="Total Expense">
-          <ExpenseCard />
+          <ExpenseCard CurrentExpense={data} />
         </MainCard>
       )}
       {expensesLoading ? (
